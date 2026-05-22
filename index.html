@@ -1,0 +1,908 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>ISR论文研究设计拆解</title>
+<link rel="stylesheet" href="https://api.fontshare.com/v2/css?f[]=satoshi@400,500,700&f[]=cabinet-grotesk@400,500,700&display=swap"/>
+<style>
+:root {
+  --bg:        #f6f5f2;
+  --bg2:       #eeece8;
+  --white:     #ffffff;
+  --ink:       #1a1814;
+  --ink2:      #5a5652;
+  --ink3:      #9a9690;
+  --accent:    #2d5be3;
+  --accent-bg: #eaf0ff;
+  --warm:      #b85c00;
+  --warm-bg:   #fff4e5;
+  --border:    rgba(26,24,20,0.1);
+  --font-head: 'Cabinet Grotesk', sans-serif;
+  --font-body: 'Satoshi', sans-serif;
+  --ease:      cubic-bezier(0.16,1,0.3,1);
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html {
+  scroll-snap-type: y mandatory;
+  scroll-behavior: smooth;
+  overflow-y: scroll;
+}
+
+body {
+  font-family: var(--font-body);
+  background: var(--bg);
+  color: var(--ink);
+  overflow-x: hidden;
+}
+
+/* ── Slide base ── */
+.slide {
+  min-height: 100vh;
+  scroll-snap-align: start;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 4rem 7vw;
+  position: relative;
+  overflow: hidden;
+}
+
+/* ── Nav dots ── */
+#nav-dots {
+  position: fixed;
+  right: 1.5rem;
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  z-index: 100;
+}
+.dot {
+  width: 7px; height: 7px;
+  border-radius: 50%;
+  background: var(--ink3);
+  cursor: pointer;
+  transition: background 0.25s, transform 0.25s;
+}
+.dot.active { background: var(--accent); transform: scale(1.4); }
+
+/* ── Progress ── */
+#progress {
+  position: fixed;
+  top: 0; left: 0;
+  height: 3px;
+  background: var(--accent);
+  z-index: 200;
+  transition: width 0.35s var(--ease);
+}
+
+/* ── Reveal animation ── */
+.r {
+  opacity: 0;
+  transform: translateY(22px);
+  transition: opacity 0.55s var(--ease), transform 0.55s var(--ease);
+}
+.slide.vis .r { opacity: 1; transform: none; }
+.r:nth-child(1) { transition-delay: 0.05s; }
+.r:nth-child(2) { transition-delay: 0.12s; }
+.r:nth-child(3) { transition-delay: 0.19s; }
+.r:nth-child(4) { transition-delay: 0.26s; }
+.r:nth-child(5) { transition-delay: 0.33s; }
+.r:nth-child(6) { transition-delay: 0.40s; }
+
+/* ── Slide counter ── */
+.slide-num {
+  position: absolute;
+  bottom: 2rem; right: 3rem;
+  font-size: 13px;
+  color: var(--ink3);
+  font-family: var(--font-body);
+  letter-spacing: 0.05em;
+}
+
+/* ── Tags ── */
+.tag {
+  display: inline-block;
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  padding: 6px 16px;
+  border-radius: 20px;
+  margin-bottom: 1.2rem;
+  border: 1.5px solid currentColor;
+}
+.tag-blue { background: var(--accent-bg); color: var(--accent); }
+.tag-warm { background: var(--warm-bg); color: var(--warm); }
+.tag-gray { background: var(--bg2); color: var(--ink2); }
+
+/* ── Typography ── */
+h1 {
+  font-family: var(--font-head);
+  font-size: clamp(2.6rem, 5.5vw, 4rem);
+  font-weight: 700;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+  color: var(--ink);
+}
+h2 {
+  font-family: var(--font-head);
+  font-size: clamp(1.8rem, 3.2vw, 2.6rem);
+  font-weight: 700;
+  line-height: 1.2;
+  letter-spacing: -0.015em;
+  color: var(--ink);
+}
+h3 {
+  font-family: var(--font-head);
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: var(--ink);
+  margin-bottom: 0.5rem;
+}
+p, li {
+  font-size: 1.08rem;
+  line-height: 1.75;
+  color: var(--ink2);
+}
+.lead {
+  font-size: 1.22rem;
+  line-height: 1.75;
+  color: var(--ink2);
+  max-width: 700px;
+}
+.sub {
+  font-size: 0.95rem;
+  color: var(--ink3);
+  margin-top: 0.5rem;
+}
+
+/* ── Section label ── */
+.sec-label {
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--ink3);
+  margin-bottom: 0.6rem;
+}
+
+/* ── Accent line ── */
+.accent-line {
+  width: 36px; height: 3px;
+  background: var(--accent);
+  border-radius: 2px;
+  margin-bottom: 1.2rem;
+}
+
+/* ── Cards ── */
+.cards { display: grid; gap: 1rem; margin-top: 1.2rem; }
+.cards-2 { grid-template-columns: 1fr 1fr; }
+.cards-3 { grid-template-columns: 1fr 1fr 1fr; }
+.card {
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 1.3rem 1.5rem;
+}
+.card-accent { border-top: 3px solid var(--accent); }
+.card-warm   { border-top: 3px solid var(--warm); }
+
+/* ── Three-block layout ── */
+.para-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 1rem;
+  margin-top: 1.2rem;
+}
+.para-block {
+  border-radius: 12px;
+  padding: 1.4rem;
+}
+.block-what      { background: var(--white); border: 1px solid var(--border); }
+.block-universal { background: var(--accent-bg); }
+.block-quote     { background: var(--warm-bg); }
+
+.block-label {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  margin-bottom: 0.9rem;
+}
+.block-what .block-label      { color: var(--ink3); }
+.block-universal .block-label { color: var(--accent); }
+.block-quote .block-label     { color: var(--warm); }
+
+.block-what p      { font-size: 1rem; line-height: 1.7; color: var(--ink2); }
+.block-universal p { font-size: 1rem; line-height: 1.7; color: #1a3a9e; }
+
+/* ── Quote sentences ── */
+.q-list { display: flex; flex-direction: column; gap: 0.65rem; }
+.q-item {
+  font-family: 'Courier New', monospace;
+  font-size: 0.88rem;
+  line-height: 1.65;
+  color: #7a4800;
+  background: rgba(255,255,255,0.6);
+  border-radius: 6px;
+  padding: 0.6rem 0.8rem;
+}
+.q-bracket { color: var(--warm); font-weight: 700; }
+
+/* ── Conclusion boxes ── */
+.concl-row { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1rem; margin-top: 1.2rem; }
+.concl-box {
+  border-radius: 12px;
+  padding: 1.5rem;
+  background: var(--white);
+  border: 1px solid var(--border);
+}
+.concl-num {
+  font-family: var(--font-head);
+  font-size: 2.2rem;
+  font-weight: 700;
+  margin-bottom: 0.4rem;
+  color: var(--accent);
+}
+
+/* ── Flow diagram ── */
+.flow { display: flex; align-items: center; gap: 0; margin-top: 1.4rem; flex-wrap: wrap; }
+.flow-box {
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-top: 3px solid var(--accent);
+  border-radius: 10px;
+  padding: 0.9rem 1.1rem;
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--ink);
+  white-space: nowrap;
+}
+.flow-box span { font-size: 0.82rem; color: var(--ink3); font-weight: 400; display: block; margin-top: 2px; }
+.flow-arr {
+  color: var(--ink3);
+  font-size: 1.2rem;
+  padding: 0 0.5rem;
+}
+
+/* ── Variable table ── */
+.var-row { display: grid; grid-template-columns: 160px 1fr 90px; gap: 0; border-bottom: 1px solid var(--border); }
+.var-row:first-child { border-top: 1px solid var(--border); }
+.var-cell { padding: 0.8rem 0.9rem; font-size: 0.95rem; }
+.var-name { font-family: 'Courier New', monospace; font-weight: 700; color: var(--accent); }
+.var-group-header {
+  grid-column: 1 / -1;
+  padding: 0.5rem 0.9rem;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  background: var(--bg2);
+  color: var(--ink3);
+}
+
+/* ── Big stat ── */
+.stat-row { display: flex; gap: 1.5rem; margin-top: 1rem; flex-wrap: wrap; }
+.stat-box {
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 1.2rem 1.8rem;
+  min-width: 150px;
+}
+.stat-num {
+  font-family: var(--font-head);
+  font-size: 2.2rem;
+  font-weight: 700;
+  line-height: 1;
+  margin-bottom: 0.3rem;
+  color: var(--accent);
+}
+.stat-label { font-size: 0.9rem; color: var(--ink3); }
+
+/* ── Steps ── */
+.steps { display: flex; flex-direction: column; gap: 0.6rem; margin-top: 0.6rem; }
+.step-item { display: flex; gap: 0.8rem; align-items: flex-start; }
+.step-dot {
+  width: 24px; height: 24px;
+  border-radius: 50%;
+  background: var(--accent-bg);
+  color: var(--accent);
+  font-size: 12px;
+  font-weight: 700;
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+.step-text { font-size: 0.98rem; color: var(--ink2); line-height: 1.6; }
+
+/* ── Slide-specific backgrounds ── */
+.slide-cover { background: var(--white); }
+.slide-cover h1 { color: var(--ink); }
+.slide-cover .lead { color: var(--ink2); }
+.slide-cover .sub  { color: var(--ink3); }
+.slide-cover .tag-gray { background: var(--bg2); color: var(--ink2); }
+
+.slide-alt { background: var(--white); }
+
+.slide-close { background: var(--white); }
+.slide-close h2 { color: var(--ink); }
+.slide-close .lead { color: rgba(255,255,255,0.75); }
+.slide-close .card { background: var(--white); border-color: var(--border); }
+.slide-close .card h3 { color: var(--ink); }
+.slide-close .card p { color: var(--ink2); }
+.slide-close .sec-label { color: var(--ink3); }
+.slide-close .slide-num { color: var(--ink3); }
+
+@media (max-width: 900px) {
+  .para-grid, .cards-3, .concl-row { grid-template-columns: 1fr; }
+  .cards-2 { grid-template-columns: 1fr; }
+  #nav-dots { display: none; }
+}
+</style>
+</head>
+<body>
+
+<div id="progress"></div>
+<div id="nav-dots"></div>
+
+<!-- ══════════════════════════════════════════
+     SLIDE 1 · 封面
+══════════════════════════════════════════ -->
+<section class="slide slide-cover" id="s1">
+  <div class="tag tag-gray r">Information Systems Research · 2019</div>
+  <h1 class="r">Using User- and<br>Marketer-Generated Content<br>for Box Office Revenue<br>Prediction</h1>
+  <p class="lead r" style="margin-top:1.4rem;">Song, Huang, Tan & Yu &nbsp;·&nbsp; ISR 30(1), pp. 191–203</p>
+  <p class="sub r" style="margin-top:2.5rem;">研究设计精读 · 学术写作课</p>
+  <div class="r" style="margin-top:2rem;width:40px;height:1px;background:var(--border);"></div>
+  <p class="r" style="margin-top:1.2rem;font-size:1.05rem;color:var(--ink2);font-weight:600;letter-spacing:0.04em;">第 02 组 &nbsp;&nbsp;|&nbsp;&nbsp; 吴哲维 &nbsp;·&nbsp; 曲年泰 &nbsp;·&nbsp; 段芊羽 &nbsp;·&nbsp; 李泽闻</p>
+  <span class="slide-num">01 / 14</span>
+</section>
+
+<!-- ══════════════════════════════════════════
+     SLIDE 2 · 文章概览
+══════════════════════════════════════════ -->
+<section class="slide slide-alt" id="s2">
+  <div class="r"><div class="accent-line"></div></div>
+  <div class="sec-label r">文章概览</div>
+  <h2 class="r">这篇文章在研究什么</h2>
+  <p class="lead r" style="margin-top:1rem;">
+    核心问题是：来自<strong>微博</strong>的用户内容（MUGC）和企业内容（MGC），与来自<strong>豆瓣</strong>的用户内容（DUGC），对中国电影票房的预测力是否不同，三者之间如何相互作用？
+  </p>
+  <div class="concl-row r" style="margin-top:1.6rem;">
+    <div class="concl-box">
+      <div class="concl-num">01</div>
+      <h3>MUGC &gt; DUGC</h3>
+      <p style="font-size:0.98rem;">微博用户内容的预测力显著强于豆瓣评论，量的差异尤其明显</p>
+    </div>
+    <div class="concl-box">
+      <div class="concl-num">02</div>
+      <h3>MGC 双路径</h3>
+      <p style="font-size:0.98rem;">官方内容既直接预测票房，也通过激发用户讨论（MUGC中介）间接影响</p>
+    </div>
+    <div class="concl-box">
+      <div class="concl-num">03</div>
+      <h3>MAPE 3.2%</h3>
+      <p style="font-size:0.98rem;">整合两平台的PVAR模型预测误差仅3.2%，远超已有模型的7%和47%</p>
+    </div>
+  </div>
+  <span class="slide-num">02 / 14</span>
+</section>
+
+<!-- ══════════════════════════════════════════
+     SLIDE 3 · 研究设计整体脉络
+══════════════════════════════════════════ -->
+<section class="slide" id="s3">
+  <div class="r"><div class="accent-line"></div></div>
+  <div class="sec-label r">研究设计脉络</div>
+  <h2 class="r">整体逻辑线</h2>
+  <p class="lead r" style="margin-top:0.8rem;">研究设计分两大部分：Section 3 是数据层，Section 4 是方法层。逻辑线清晰，每步环环相扣。</p>
+  <div class="flow r">
+    <div class="flow-box">样本筛选<span>60部电影</span></div>
+    <div class="flow-arr">→</div>
+    <div class="flow-box">多源采集<span>微博 + 豆瓣</span></div>
+    <div class="flow-arr">→</div>
+    <div class="flow-box">文本变量化<span>两阶段SVM</span></div>
+    <div class="flow-arr">→</div>
+    <div class="flow-box">描述统计<span>变量概览</span></div>
+    <div class="flow-arr">→</div>
+    <div class="flow-box">PVAR模型<span>方法选择</span></div>
+    <div class="flow-arr">→</div>
+    <div class="flow-box">公式+变量<span>操作化定义</span></div>
+  </div>
+  <div class="cards cards-2 r" style="margin-top:1.4rem;">
+    <div class="card card-accent">
+      <h3>Section 3 · 数据层</h3>
+      <p>从哪采集、采集了什么、怎么把原始文本转化成可用的结构化变量</p>
+    </div>
+    <div class="card card-warm">
+      <h3>Section 4 · 方法层</h3>
+      <p>用什么模型、为什么选这个模型、每个变量和参数怎么定义</p>
+    </div>
+  </div>
+  <span class="slide-num">03 / 14</span>
+</section>
+
+<!-- ══════════════════════════════════════════
+     SLIDE 4 · 段落1 样本筛选 + 变量关系图
+══════════════════════════════════════════ -->
+<section class="slide" id="s4b">
+  <div class="r"><div class="accent-line"></div></div>
+  <div class="sec-label r">主要发现</div>
+  <h2 class="r">变量关系与核心结论</h2>
+  <div class="r" style="margin-top:2rem;">
+    <svg width="100%" viewBox="0 0 760 320" style="display:block;max-height:420px;">
+      <defs>
+        <marker id="arr4" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+          <path d="M2 1L8 5L2 9" fill="none" stroke="context-stroke" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </marker>
+      </defs>
+      <!-- 转发量 -->
+      <rect x="20" y="200" width="140" height="56" rx="8" fill="#f6f5f2" stroke="#9a9690" stroke-width="1.5"/>
+      <text x="90" y="224" text-anchor="middle" font-family="sans-serif" font-size="14" font-weight="600" fill="#1a1814">转发量</text>
+      <text x="90" y="244" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#5a5652">RWeiboVol</text>
+      <!-- MGC -->
+      <rect x="20" y="90" width="140" height="56" rx="8" fill="#eaf0ff" stroke="#2d5be3" stroke-width="1.5"/>
+      <text x="90" y="114" text-anchor="middle" font-family="sans-serif" font-size="14" font-weight="600" fill="#1a3a9e">MGC</text>
+      <text x="90" y="134" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#2d5be3">官方微博内容</text>
+      <!-- MUGC -->
+      <rect x="290" y="30" width="160" height="56" rx="8" fill="#eaf0ff" stroke="#2d5be3" stroke-width="1.5"/>
+      <text x="370" y="54" text-anchor="middle" font-family="sans-serif" font-size="14" font-weight="600" fill="#1a3a9e">MUGC</text>
+      <text x="370" y="74" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#2d5be3">微博用户内容</text>
+      <!-- DUGC -->
+      <rect x="290" y="220" width="160" height="56" rx="8" fill="#eaf0ff" stroke="#2d5be3" stroke-width="1.5"/>
+      <text x="370" y="244" text-anchor="middle" font-family="sans-serif" font-size="14" font-weight="600" fill="#1a3a9e">DUGC</text>
+      <text x="370" y="264" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#2d5be3">豆瓣评论内容</text>
+      <!-- 票房 -->
+      <rect x="560" y="110" width="180" height="80" rx="8" fill="#fff4e5" stroke="#b85c00" stroke-width="1.5"/>
+      <text x="650" y="144" text-anchor="middle" font-family="sans-serif" font-size="14" font-weight="600" fill="#7a4000">票房收入</text>
+      <text x="650" y="164" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#b85c00">BoxOfficeRev</text>
+      <text x="650" y="182" text-anchor="middle" font-family="sans-serif" font-size="10" fill="#b85c00">因变量</text>
+      <!-- 转发量 → MGC -->
+      <line x1="90" y1="200" x2="90" y2="148" stroke="#9a9690" stroke-width="1.5" marker-end="url(#arr4)"/>
+      <text x="58" y="178" text-anchor="middle" font-family="sans-serif" font-size="10" fill="#9a9690">刺激官方</text>
+      <text x="58" y="192" text-anchor="middle" font-family="sans-serif" font-size="10" fill="#9a9690">跟进发博</text>
+      <!-- MGC → MUGC -->
+      <line x1="160" y1="106" x2="288" y2="66" stroke="#2d5be3" stroke-width="1.5" marker-end="url(#arr4)"/>
+      <text x="218" y="74" text-anchor="middle" font-family="sans-serif" font-size="10" fill="#2d5be3">激活用户讨论</text>
+      <!-- MGC → 票房 直接 -->
+      <line x1="160" y1="118" x2="558" y2="148" stroke="#2d5be3" stroke-width="1.5" marker-end="url(#arr4)"/>
+      <text x="358" y="122" text-anchor="middle" font-family="sans-serif" font-size="10" fill="#2d5be3">直接预测（lag 1）</text>
+      <!-- MUGC → 票房 -->
+      <line x1="450" y1="58" x2="558" y2="128" stroke="#2d5be3" stroke-width="2.5" marker-end="url(#arr4)"/>
+      <text x="524" y="78" text-anchor="middle" font-family="sans-serif" font-size="10" fill="#2d5be3">量★显著 lag3</text>
+      <!-- DUGC → 票房 虚线 -->
+      <line x1="450" y1="248" x2="558" y2="192" stroke="#9a9690" stroke-width="1.5" stroke-dasharray="5 4" marker-end="url(#arr4)"/>
+      <text x="526" y="240" text-anchor="middle" font-family="sans-serif" font-size="10" fill="#9a9690">评分显著</text>
+      <text x="526" y="256" text-anchor="middle" font-family="sans-serif" font-size="10" fill="#9a9690">量不显著</text>
+      <!-- 中介标注 -->
+      <rect x="282" y="142" width="176" height="22" rx="5" fill="#eaf0ff" stroke="#2d5be3" stroke-width="0.8"/>
+      <text x="370" y="157" text-anchor="middle" font-family="sans-serif" font-size="10" fill="#1a3a9e">MUGC 起部分中介作用</text>
+      <!-- 图例 -->
+      <line x1="20" y1="306" x2="48" y2="306" stroke="#2d5be3" stroke-width="1.5" marker-end="url(#arr4)"/>
+      <text x="56" y="310" font-family="sans-serif" font-size="10" fill="#5a5652">显著直接预测</text>
+      <line x1="175" y1="306" x2="203" y2="306" stroke="#9a9690" stroke-width="1.5" stroke-dasharray="5 4" marker-end="url(#arr4)"/>
+      <text x="211" y="310" font-family="sans-serif" font-size="10" fill="#5a5652">部分显著</text>
+    </svg>
+  </div>
+  <span class="slide-num">04 / 14</span>
+</section>
+
+<!-- ══════════════════════════════════════════
+     SLIDE 5 · 变量关系图
+══════════════════════════════════════════ -->
+<section class="slide slide-alt" id="s4">
+  <div class="r"><div class="accent-line"></div></div>
+  <div class="r"><span class="tag tag-blue">段落 1 · Sec 3.1 首段</span></div>
+  <h2 class="r">样本筛选</h2>
+  <div class="para-grid r">
+    <div class="para-block block-what">
+      <div class="block-label">这段说了什么</div>
+      <p>三步筛选：① 找2012年有完整日票房数据的电影，得156部；② 删去17部缺豆瓣数据的；③ 筛选在微博有企业认证官号的，最终保留 <strong>60部</strong> 样本。每步剔除均给出明确理由。</p>
+    </div>
+    <div class="para-block block-universal">
+      <div class="block-label">普适性总结</div>
+      <p>样本筛选应分步呈现，每步说明标准和剔除原因。每一次"删去"背后都有数据完整性或研究设计上的理由，向读者证明样本不是随意选取的。</p>
+    </div>
+    <div class="para-block block-quote">
+      <div class="block-label">可模仿语句</div>
+      <div class="q-list">
+        <div class="q-item">"The data collection procedure involves several steps."</div>
+        <div class="q-item">"We delete <span class="q-bracket">[N]</span> <span class="q-bracket">[units]</span> that lack <span class="q-bracket">[data]</span> information during their <span class="q-bracket">[period]</span>."</div>
+        <div class="q-item">"We subsequently obtain <span class="q-bracket">[N]</span> <span class="q-bracket">[units]</span> as the sample."</div>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">05 / 14</span>
+</section>
+
+<!-- ══════════════════════════════════════════
+     SLIDE 5 · 段落2 多源数据采集
+══════════════════════════════════════════ -->
+<section class="slide" id="s5">
+  <div class="r"><div class="accent-line"></div></div>
+  <div class="r"><span class="tag tag-blue">段落 2 · Sec 3.1 第2段</span></div>
+  <h2 class="r">多源数据采集</h2>
+  <div class="para-grid r">
+    <div class="para-block block-what">
+      <div class="block-label">这段说了什么</div>
+      <p>按 second / third / fourth / fifth 列出四类数据：</p>
+      <div class="steps" style="margin-top:0.7rem;">
+        <div class="step-item"><div class="step-dot">1</div><div class="step-text">票房+排片率（JAVA爬虫，cbooo.cn）</div></div>
+        <div class="step-item"><div class="step-dot">2</div><div class="step-text">豆瓣DUGC（JAVA，358,980条）</div></div>
+        <div class="step-item"><div class="step-dot">3</div><div class="step-text">微博MGC（API接口，15,705条）</div></div>
+        <div class="step-item"><div class="step-dot">4</div><div class="step-text">微博UGC（关键词爬虫，258,665条，过滤未认证用户防水军）</div></div>
+      </div>
+    </div>
+    <div class="para-block block-universal">
+      <div class="block-label">普适性总结</div>
+      <p>多源数据采集需按来源分步描述，说明每个来源对应的采集工具、关键词/接口、数据量。有质量控制措施时必须写出（如过滤水军），让读者能大致"复现"采集过程，彰显数据可信度。</p>
+    </div>
+    <div class="para-block block-quote">
+      <div class="block-label">可模仿语句</div>
+      <div class="q-list">
+        <div class="q-item">"By obtaining the API access from <span class="q-bracket">[platform]</span>, we capture the data of <span class="q-bracket">[content type]</span>, including <span class="q-bracket">[items]</span>."</div>
+        <div class="q-item">"We use <span class="q-bracket">[X]</span> as the search keywords to retrieve <span class="q-bracket">[data type]</span> in the search engine of <span class="q-bracket">[platform]</span>."</div>
+        <div class="q-item">"We delete <span class="q-bracket">[users]</span> <span class="q-bracket">[condition]</span> to avoid potential issues that <span class="q-bracket">[problem]</span>."</div>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">06 / 14</span>
+</section>
+
+<!-- ══════════════════════════════════════════
+     SLIDE 6 · 段落3 引入两阶段框架
+══════════════════════════════════════════ -->
+<section class="slide slide-alt" id="s6">
+  <div class="r"><div class="accent-line"></div></div>
+  <div class="r"><span class="tag tag-blue">段落 3 · Sec 3.1 第3段</span></div>
+  <h2 class="r">引入两阶段处理框架</h2>
+  <div class="para-grid r">
+    <div class="para-block block-what">
+      <div class="block-label">这段说了什么</div>
+      <p>引用 Hennig-Thurau et al. (2015) 的框架作为方法依据。分两阶段：</p>
+      <div class="steps" style="margin-top:0.7rem;">
+        <div class="step-item"><div class="step-dot">1</div><div class="step-text">内容分类：将原始微博归入意图类 / 评价类 / 垃圾类</div></div>
+        <div class="step-item"><div class="step-dot">2</div><div class="step-text">情感分析：在评价类微博上判断正 / 负情感</div></div>
+      </div>
+    </div>
+    <div class="para-block block-universal">
+      <div class="block-label">普适性总结</div>
+      <p>引用已发表框架（而非自创方法）赋予方法合法性，是IS领域常见写作策略。借用权威框架直接降低审稿人对方法合理性的质疑，也节省大量自我证明篇幅。只需在动词前加 "suggested by [citation]" 即可完成引用。</p>
+    </div>
+    <div class="para-block block-quote">
+      <div class="block-label">可模仿语句</div>
+      <div class="q-list">
+        <div class="q-item">"We conduct a two-stage data processing suggested by <span class="q-bracket">[citation]</span> to calculate <span class="q-bracket">[measure]</span>."</div>
+        <div class="q-item">"We conduct <span class="q-bracket">[step]</span> to identify <span class="q-bracket">[target]</span> by sorting <span class="q-bracket">[N]</span> <span class="q-bracket">[items]</span> into one of the <span class="q-bracket">[N]</span> following groups: (1) ...; (2) ...; (3) ..."</div>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">07 / 14</span>
+</section>
+
+<!-- ══════════════════════════════════════════
+     SLIDE 7 · 段落4+5 SVM流程
+══════════════════════════════════════════ -->
+<section class="slide" id="s7">
+  <div class="r"><div class="accent-line"></div></div>
+  <div class="r"><span class="tag tag-blue">段落 4+5 · Sec 3.1 第4–5段</span></div>
+  <h2 class="r">SVM 内容分类 + 情感分析</h2>
+  <div class="para-grid r">
+    <div class="para-block block-what">
+      <div class="block-label">这段说了什么</div>
+      <p><strong>内容分类（段落4）</strong></p>
+      <div class="steps" style="margin-top:0.4rem;margin-bottom:0.9rem;">
+        <div class="step-item"><div class="step-dot">1</div><div class="step-text">4名编码员人工标注2万条训练集</div></div>
+        <div class="step-item"><div class="step-dot">2</div><div class="step-text">哈希特征法提取1.5万个中文词特征</div></div>
+        <div class="step-item"><div class="step-dot">3</div><div class="step-text">卡方统计筛选判别力最高的特征</div></div>
+        <div class="step-item"><div class="step-dot">4</div><div class="step-text">训练SVM；交叉验证，准确率 87.59%</div></div>
+        <div class="step-item"><div class="step-dot">5</div><div class="step-text">对25万条微博分类，得79,305条评价类</div></div>
+      </div>
+      <p><strong>情感分析（段落5）</strong>：在79,305条上重复SVM流程，10折交叉验证，Precision 94.83%，Recall 95.19%，F1 94.94%</p>
+    </div>
+    <div class="para-block block-universal">
+      <div class="block-label">普适性总结</div>
+      <p>机器学习分类流程按"数据标注 → 特征工程 → 模型训练 → 验证 → 应用"五步汇报，每步说明方法和关键参数，最终报告指标证明质量。</p>
+      <p style="margin-top:0.7rem;">情感分析必须同时报告 Precision、Recall、F1 三个指标，而非只报准确率——单一准确率在类别不平衡时会掩盖少数类的分类质量。</p>
+    </div>
+    <div class="para-block block-quote">
+      <div class="block-label">可模仿语句</div>
+      <div class="q-list">
+        <div class="q-item">"<span class="q-bracket">[N]</span> coders, who were extensively trained for the task, manually coded <span class="q-bracket">[N]</span> randomly selected <span class="q-bracket">[items]</span> and divided them into <span class="q-bracket">[N]</span> different groups."</div>
+        <div class="q-item">"We select <span class="q-bracket">[features]</span> with the highest discriminatory power by measuring their chi-squared statistics."</div>
+        <div class="q-item">"We train the <span class="q-bracket">[model]</span> with the training set data and follow the method proposed by <span class="q-bracket">[citation]</span> to calculate its precision, recall and F1-score by <span class="q-bracket">[N]</span>-fold cross validation."</div>
+        <div class="q-item">"This indicates that our model provides satisfactory performance on this <span class="q-bracket">[task]</span>."</div>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">08 / 14</span>
+</section>
+
+<!-- ══════════════════════════════════════════
+     SLIDE 8 · 段落6 解释SVM性能
+══════════════════════════════════════════ -->
+<section class="slide slide-alt" id="s8">
+  <div class="r"><div class="accent-line"></div></div>
+  <div class="r"><span class="tag tag-blue">段落 6 · Sec 3.1 第6段</span></div>
+  <h2 class="r">解释 SVM 性能好的三个原因</h2>
+  <div class="para-grid r">
+    <div class="para-block block-what">
+      <div class="block-label">这段说了什么</div>
+      <div class="steps">
+        <div class="step-item"><div class="step-dot">1</div><div class="step-text">提前过滤垃圾信息，减少训练集噪声</div></div>
+        <div class="step-item"><div class="step-dot">2</div><div class="step-text">微博文本短（均值74.5字符），降低情感判断难度（引Hennig-Thurau）</div></div>
+        <div class="step-item"><div class="step-dot">3</div><div class="step-text">类别不平衡问题（负向仅5.76%）用差异化惩罚权重解决：正向C=10，负向C=50（引Vapnik 1998）</div></div>
+      </div>
+    </div>
+    <div class="para-block block-universal">
+      <div class="block-label">普适性总结</div>
+      <p>报告好结果后，主动说明"为什么结果好"，是展示方法论深度的关键步骤，也是防御审稿人质疑的有效手段。三点式结构，每点引一篇文献，论证层次分明。</p>
+      <p style="margin-top:0.7rem;">这一段提示：好的方法部分不只是"描述步骤"，还要为每个关键数字提供因果解释。</p>
+    </div>
+    <div class="para-block block-quote">
+      <div class="block-label">可模仿语句</div>
+      <div class="q-list">
+        <div class="q-item">"The overall performance of our <span class="q-bracket">[method]</span> is much enhanced, possibly because of the following three reasons."</div>
+        <div class="q-item">"We notice that our training set is unbalanced; that is, only <span class="q-bracket">[X]</span>% <span class="q-bracket">[items]</span> are labeled as <span class="q-bracket">[minority]</span>."</div>
+        <div class="q-item">"To address this issue, we use different penalty weights for each class, namely, <span class="q-bracket">[C1]</span> for <span class="q-bracket">[class A]</span> and <span class="q-bracket">[C2]</span> for <span class="q-bracket">[class B]</span>."</div>
+        <div class="q-item">"This strategy is suggested by <span class="q-bracket">[citation]</span>, which is also implemented by <span class="q-bracket">[benchmark tool]</span>."</div>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">09 / 14</span>
+</section>
+
+<!-- ══════════════════════════════════════════
+     SLIDE 9 · 段落7 描述性统计
+══════════════════════════════════════════ -->
+<section class="slide" id="s9">
+  <div class="r"><div class="accent-line"></div></div>
+  <div class="r"><span class="tag tag-blue">段落 7 · Section 3.2</span></div>
+  <h2 class="r">描述性统计</h2>
+  <div class="para-grid r">
+    <div class="para-block block-what">
+      <div class="block-label">这段说了什么</div>
+      <p>呈现1,441条面板记录的关键变量统计（均值、标准差、极值），并用具体数字说明两个关键特征：</p>
+      <div class="stat-row" style="margin-top:0.9rem;gap:0.9rem;">
+        <div class="stat-box">
+          <div class="stat-num">60%+</div>
+          <div class="stat-label">开映周票房占总票房</div>
+        </div>
+        <div class="stat-box">
+          <div class="stat-num">206 vs 51</div>
+          <div class="stat-label">豆瓣 vs 微博 日均评论量</div>
+        </div>
+      </div>
+      <p style="margin-top:0.9rem;font-size:0.95rem;">同时给出选"日数据"而非"周数据"的理由：电影生命周期短。</p>
+    </div>
+    <div class="para-block block-universal">
+      <div class="block-label">普适性总结</div>
+      <p>描述性统计不只是"呈现数据"，还应用具体数字支撑后续设计决策（为何选日粒度）、揭示变量间量级差异（为后续比较结论铺垫）。每个数字都应服务于某个论证目的，而非纯粹罗列。</p>
+    </div>
+    <div class="para-block block-quote">
+      <div class="block-label">可模仿语句</div>
+      <div class="q-list">
+        <div class="q-item">"Each <span class="q-bracket">[unit]</span> has an average <span class="q-bracket">[variable]</span> of <span class="q-bracket">[value]</span>, with <span class="q-bracket">[min]</span> and <span class="q-bracket">[max]</span> as the minimum and maximum, respectively."</div>
+        <div class="q-item">"The ratio of <span class="q-bracket">[metric A]</span> to <span class="q-bracket">[metric B]</span> is above <span class="q-bracket">[X]</span>%."</div>
+        <div class="q-item">"Using <span class="q-bracket">[granularity A]</span> as the dependent variable is more appropriate than using <span class="q-bracket">[granularity B]</span> because <span class="q-bracket">[reason]</span>."</div>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">10 / 14</span>
+</section>
+
+<!-- ══════════════════════════════════════════
+     SLIDE 10 · 段落8 模型选择
+══════════════════════════════════════════ -->
+<section class="slide slide-alt" id="s10">
+  <div class="r"><div class="accent-line"></div></div>
+  <div class="r"><span class="tag tag-warm">段落 8 · Sec 4 第1–2段</span></div>
+  <h2 class="r">模型选择与论证（PVAR）</h2>
+  <div class="para-grid r">
+    <div class="para-block block-what">
+      <div class="block-label">这段说了什么</div>
+      <p>先陈述数据特点：7个变量互为内生，每个都是其他所有变量过去值的线性函数。由此引出PVAR，再用"一方面…另一方面"结构说明选择理由：</p>
+      <div class="cards" style="margin-top:0.7rem;gap:0.6rem;">
+        <div class="card" style="padding:0.9rem;"><p><strong>一方面：</strong>VAR擅长捕捉变量间动态交互效应</p></div>
+        <div class="card" style="padding:0.9rem;"><p><strong>另一方面：</strong>面板结构可控制不可观测个体异质性，滞后变量作工具变量获得一致估计</p></div>
+      </div>
+    </div>
+    <div class="para-block block-universal">
+      <div class="block-label">普适性总结</div>
+      <p>模型选择的标准论证链条：先描述数据结构或问题特征（为什么普通OLS不够用）→ 再说模型的对应优势。</p>
+      <p style="margin-top:0.7rem;">"on the one hand... on the other hand" 句式用于同时呈现同一模型在两个维度上的优势，是IS实证论文模型部分的经典写法。</p>
+    </div>
+    <div class="para-block block-quote">
+      <div class="block-label">可模仿语句</div>
+      <div class="q-list">
+        <div class="q-item">"Each variable is endogenous and is a linear function of its own past values and the past values of all other variables."</div>
+        <div class="q-item">"On the one hand, <span class="q-bracket">[method]</span> are especially well suited to measure <span class="q-bracket">[property A]</span>. On the other hand, the <span class="q-bracket">[data structure]</span> can <span class="q-bracket">[advantage B]</span> and <span class="q-bracket">[advantage C]</span>."</div>
+        <div class="q-item">"We employ and estimate a <span class="q-bracket">[model]</span> with <span class="q-bracket">[feature A]</span> and <span class="q-bracket">[feature B]</span> to <span class="q-bracket">[purpose]</span>."</div>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">11 / 14</span>
+</section>
+
+<!-- ══════════════════════════════════════════
+     SLIDE 11 · 段落9 公式与控制变量
+══════════════════════════════════════════ -->
+<section class="slide" id="s11">
+  <div class="r"><div class="accent-line"></div></div>
+  <div class="r"><span class="tag tag-warm">段落 9 · Sec 4 第3段</span></div>
+  <h2 class="r">模型公式、对数化与控制变量</h2>
+  <div class="para-grid r">
+    <div class="para-block block-what">
+      <div class="block-label">这段说了什么</div>
+      <p>给出正式7维PVAR矩阵方程，随后逐一说明：</p>
+      <div class="steps" style="margin-top:0.6rem;">
+        <div class="step-item"><div class="step-dot">1</div><div class="step-text">所有连续变量取对数，并举例说明</div></div>
+        <div class="step-item"><div class="step-dot">2</div><div class="step-text">滞后阶数p由AIC+BIC共同决定，最优p=4</div></div>
+        <div class="step-item"><div class="step-dot">3</div><div class="step-text">三个控制变量：排片率、上映天数、是否周末（虚拟变量）</div></div>
+        <div class="step-item"><div class="step-dot">4</div><div class="step-text">两类固定效应：电影个体固定效应μ_i + 时间固定效应δ_t</div></div>
+      </div>
+    </div>
+    <div class="para-block block-universal">
+      <div class="block-label">普适性总结</div>
+      <p>呈现正式模型公式后，必须逐一解释每个符号的操作化定义；控制变量需说明选择依据（引文或理论）；固定效应的处理方式必须明确——这是避免审稿人质疑内生性问题的核心段落。</p>
+    </div>
+    <div class="para-block block-quote">
+      <div class="block-label">可模仿语句</div>
+      <div class="q-list">
+        <div class="q-item">"We make the log transformation of <span class="q-bracket">[variables]</span>. For example, <span class="q-bracket">[L-variable]</span> is the log transformation of the <span class="q-bracket">[description]</span> for <span class="q-bracket">[unit]</span> i on <span class="q-bracket">[time]</span> t."</div>
+        <div class="q-item">"The p value indicates the number of lags, which may be determined using <span class="q-bracket">[AIC]</span> and <span class="q-bracket">[BIC]</span>."</div>
+        <div class="q-item">"We consider <span class="q-bracket">[N]</span> exogenous variables as follows. <span class="q-bracket">[Variable]</span> indicates if <span class="q-bracket">[condition]</span> (1 for <span class="q-bracket">[A]</span>, and 0 otherwise) to control for the possible <span class="q-bracket">[effect]</span>."</div>
+        <div class="q-item">"The <span class="q-bracket">[μ_i]</span> value is a vector of unobserved <span class="q-bracket">[unit]</span>-specific effects characterizing the time-invariant attributes of <span class="q-bracket">[units]</span>."</div>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">12 / 14</span>
+</section>
+
+<!-- ══════════════════════════════════════════
+     SLIDE 12 · 关键变量定义
+══════════════════════════════════════════ -->
+<section class="slide slide-alt" id="s12">
+  <div class="r"><div class="accent-line"></div></div>
+  <div class="sec-label r">补充</div>
+  <h2 class="r">关键变量定义一览</h2>
+  <div class="r" style="margin-top:1rem;border-radius:12px;overflow:hidden;border:1px solid var(--border);">
+    <div class="var-row"><div class="var-group-header">因变量</div></div>
+    <div class="var-row">
+      <div class="var-cell var-name">BoxOfficeRev</div>
+      <div class="var-cell" style="color:var(--ink2);">电影 i 在第 t 天的全国日票房收入（百万人民币），取对数后记作 LBoxOfficeRev</div>
+      <div class="var-cell" style="font-size:0.88rem;color:var(--ink3);">均值 2.89M</div>
+    </div>
+    <div class="var-row"><div class="var-group-header">微博端 MUGC</div></div>
+    <div class="var-row">
+      <div class="var-cell var-name">WeiboVol</div>
+      <div class="var-cell" style="color:var(--ink2);">每日评价类微博数量（经两阶段SVM筛选后聚合）</div>
+      <div class="var-cell" style="font-size:0.88rem;color:var(--ink3);">均值 51.29</div>
+    </div>
+    <div class="var-row">
+      <div class="var-cell var-name">WeiboVal</div>
+      <div class="var-cell" style="color:var(--ink2);">每日MUGC情感比值（正负情感分析后聚合，范围 −1 到 1）</div>
+      <div class="var-cell" style="font-size:0.88rem;color:var(--ink3);">均值 0.74</div>
+    </div>
+    <div class="var-row">
+      <div class="var-cell var-name">RWeiboVol</div>
+      <div class="var-cell" style="color:var(--ink2);">每日MUGC转发量之和，衡量内容扩散程度</div>
+      <div class="var-cell" style="font-size:0.88rem;color:var(--ink3);">均值 101.46</div>
+    </div>
+    <div class="var-row"><div class="var-group-header">微博端 MGC</div></div>
+    <div class="var-row">
+      <div class="var-cell var-name">OfficialVol</div>
+      <div class="var-cell" style="color:var(--ink2);">发行方官方微博账号每日发博数量（API采集）</div>
+      <div class="var-cell" style="font-size:0.88rem;color:var(--ink3);">均值 9.90</div>
+    </div>
+    <div class="var-row"><div class="var-group-header">豆瓣端 DUGC</div></div>
+    <div class="var-row">
+      <div class="var-cell var-name">DoubanVol</div>
+      <div class="var-cell" style="color:var(--ink2);">每日豆瓣新增评论数量</div>
+      <div class="var-cell" style="font-size:0.88rem;color:var(--ink3);">均值 206.53</div>
+    </div>
+    <div class="var-row">
+      <div class="var-cell var-name">DoubanVal</div>
+      <div class="var-cell" style="color:var(--ink2);">每日豆瓣评论平均评分（1.33–9.74）</div>
+      <div class="var-cell" style="font-size:0.88rem;color:var(--ink3);">均值 5.59</div>
+    </div>
+    <div class="var-row"><div class="var-group-header">控制变量</div></div>
+    <div class="var-row">
+      <div class="var-cell var-name">ScreenRatio</div>
+      <div class="var-cell" style="color:var(--ink2);">当日排片率（衡量时变质量感知）</div>
+      <div class="var-cell"></div>
+    </div>
+    <div class="var-row">
+      <div class="var-cell var-name">Age / Weekend</div>
+      <div class="var-cell" style="color:var(--ink2);">上映天数 / 是否周末或节假日（0/1虚拟变量）</div>
+      <div class="var-cell"></div>
+    </div>
+  </div>
+  <span class="slide-num">13 / 14</span>
+</section>
+
+
+
+<!-- ══════════════════════════════════════════
+     SLIDE 14 · 写作启示
+══════════════════════════════════════════ -->
+<section class="slide slide-close" id="s13">
+  <div class="r"><div style="width:36px;height:3px;background:rgba(255,255,255,0.18);border-radius:2px;margin-bottom:1.2rem;"></div></div>
+  <div class="sec-label r">写作启示</div>
+  <h2 class="r">四条可带走的写作策略</h2>
+  <div class="cards cards-2 r" style="margin-top:1.4rem;">
+    <div class="card">
+      <h3>01 · 引用框架赋予合法性</h3>
+      <p>用"suggested by [citation]"引用现有框架，而非自创方法，直接降低审稿人质疑。</p>
+    </div>
+    <div class="card">
+      <h3>02 · 好结果需要因果解释</h3>
+      <p>报告高准确率后，主动说明"为什么好"（三点式 + 逐点引文），展示方法论深度。</p>
+    </div>
+    <div class="card">
+      <h3>03 · 描述统计服务论证</h3>
+      <p>每个统计数字都要服务于某个论证目的，支撑设计决策或为后续结论铺垫，而非纯粹罗列。</p>
+    </div>
+    <div class="card">
+      <h3>04 · 模型选择要有链条</h3>
+      <p>先描述数据特征（为什么OLS不够）→ 再说模型优势，用"on the one hand / on the other hand"呈现两个维度。</p>
+    </div>
+  </div>
+  <span class="slide-num">14 / 14</span>
+</section>
+
+<script>
+const slides = Array.from(document.querySelectorAll('.slide'));
+const dotsContainer = document.getElementById('nav-dots');
+const progress = document.getElementById('progress');
+
+slides.forEach((_, i) => {
+  const dot = document.createElement('div');
+  dot.className = 'dot';
+  dot.onclick = () => slides[i].scrollIntoView({ behavior: 'smooth' });
+  dotsContainer.appendChild(dot);
+});
+const dots = Array.from(dotsContainer.querySelectorAll('.dot'));
+
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    const idx = slides.indexOf(entry.target);
+    if (entry.isIntersecting) {
+      entry.target.classList.add('vis');
+      dots.forEach(d => d.classList.remove('active'));
+      if (dots[idx]) dots[idx].classList.add('active');
+      progress.style.width = ((idx + 1) / slides.length * 100) + '%';
+    }
+  });
+}, { threshold: 0.45 });
+
+slides.forEach(s => observer.observe(s));
+
+let current = 0;
+document.addEventListener('keydown', e => {
+  if (e.key === 'ArrowDown' || e.key === 'ArrowRight' || e.key === ' ') {
+    e.preventDefault();
+    current = Math.min(current + 1, slides.length - 1);
+    slides[current].scrollIntoView({ behavior: 'smooth' });
+  } else if (e.key === 'ArrowUp' || e.key === 'ArrowLeft') {
+    e.preventDefault();
+    current = Math.max(current - 1, 0);
+    slides[current].scrollIntoView({ behavior: 'smooth' });
+  }
+});
+
+const syncObserver = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) current = slides.indexOf(entry.target);
+  });
+}, { threshold: 0.5 });
+slides.forEach(s => syncObserver.observe(s));
+</script>
+</body>
+</html>
