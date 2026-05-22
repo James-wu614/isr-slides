@@ -696,62 +696,61 @@ p, li {
   <div class="sec-label r">数据架构</div>
   <h2 class="r">多源数据采集架构图</h2>
   <div class="r" style="margin-top:1.6rem;">
-  <svg width="100%" viewBox="0 0 760 280" style="display:block;max-height:320px;">
+  <svg width="100%" viewBox="0 0 780 310" style="display:block;max-height:350px;">
     <defs>
       <marker id="df_arr" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
         <path d="M2 1L8 5L2 9" fill="none" stroke="context-stroke" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
       </marker>
     </defs>
 
-    <!-- 平台层 -->
-    <text x="185" y="22" text-anchor="middle" font-family="sans-serif" font-size="11" font-weight="700" fill="#9a9690" letter-spacing="2">平台</text>
-    <text x="575" y="22" text-anchor="middle" font-family="sans-serif" font-size="11" font-weight="700" fill="#9a9690" letter-spacing="2">数据</text>
+    <!-- ── 微博平台容器 x=20 y=20 w=230 h=220 ── -->
+    <rect x="20" y="20" width="230" height="220" rx="10" fill="#eaf0ff" stroke="#2d5be3" stroke-width="1.5" stroke-dasharray="6 3"/>
+    <text x="135" y="42" text-anchor="middle" font-family="sans-serif" font-size="13" font-weight="700" fill="#1a3a9e">微博 Weibo</text>
+    <!-- MGC -->
+    <rect x="34" y="52" width="202" height="40" rx="6" fill="#fff" stroke="#2d5be3" stroke-width="1"/>
+    <text x="135" y="69" text-anchor="middle" font-family="sans-serif" font-size="11" font-weight="600" fill="#1a1814">MGC（企业官方微博）</text>
+    <text x="135" y="85" text-anchor="middle" font-family="sans-serif" font-size="9" fill="#5a5652">15,705 条 · API 接口采集</text>
+    <!-- MUGC -->
+    <rect x="34" y="104" width="202" height="40" rx="6" fill="#fff" stroke="#2d5be3" stroke-width="1"/>
+    <text x="135" y="121" text-anchor="middle" font-family="sans-serif" font-size="11" font-weight="600" fill="#1a1814">MUGC（用户微博）</text>
+    <text x="135" y="137" text-anchor="middle" font-family="sans-serif" font-size="9" fill="#5a5652">258,665 条 · 关键词爬虫</text>
+    <!-- 转发量 -->
+    <rect x="34" y="156" width="202" height="40" rx="6" fill="#f6f5f2" stroke="#9a9690" stroke-width="1"/>
+    <text x="135" y="173" text-anchor="middle" font-family="sans-serif" font-size="11" font-weight="600" fill="#1a1814">转发量 RWeiboVol</text>
+    <text x="135" y="189" text-anchor="middle" font-family="sans-serif" font-size="9" fill="#5a5652">随 MUGC 同步采集</text>
+    <!-- 质量控制注 -->
+    <text x="135" y="214" text-anchor="middle" font-family="sans-serif" font-size="9" fill="#2d5be3">⚠ 过滤未认证用户（防水军）</text>
 
-    <!-- 微博平台 -->
-    <rect x="80" y="32" width="210" height="200" rx="10" fill="#eaf0ff" stroke="#2d5be3" stroke-width="1.5" stroke-dasharray="6 3"/>
-    <text x="185" y="54" text-anchor="middle" font-family="sans-serif" font-size="13" font-weight="700" fill="#1a3a9e">微博 Weibo</text>
+    <!-- ── 豆瓣平台容器 x=530 y=20 w=230 h=170 ── -->
+    <rect x="530" y="20" width="230" height="170" rx="10" fill="#fff4e5" stroke="#b85c00" stroke-width="1.5" stroke-dasharray="6 3"/>
+    <text x="645" y="42" text-anchor="middle" font-family="sans-serif" font-size="13" font-weight="700" fill="#7a4000">豆瓣 Douban</text>
+    <!-- DUGC -->
+    <rect x="544" y="52" width="202" height="40" rx="6" fill="#fff" stroke="#b85c00" stroke-width="1"/>
+    <text x="645" y="69" text-anchor="middle" font-family="sans-serif" font-size="11" font-weight="600" fill="#1a1814">DUGC（用户评论）</text>
+    <text x="645" y="85" text-anchor="middle" font-family="sans-serif" font-size="9" fill="#5a5652">358,980 条 · JAVA 爬虫</text>
+    <!-- DoubanVal -->
+    <rect x="544" y="104" width="202" height="40" rx="6" fill="#f6f5f2" stroke="#9a9690" stroke-width="1"/>
+    <text x="645" y="121" text-anchor="middle" font-family="sans-serif" font-size="11" font-weight="600" fill="#1a1814">DoubanVal（评分）</text>
+    <text x="645" y="137" text-anchor="middle" font-family="sans-serif" font-size="9" fill="#5a5652">随评论同步采集</text>
+    <!-- 第三方注 -->
+    <text x="645" y="164" text-anchor="middle" font-family="sans-serif" font-size="9" fill="#b85c00">话题中心式 · 主动搜索</text>
 
-    <!-- 微博内3块 -->
-    <rect x="96" y="64" width="178" height="38" rx="6" fill="#fff" stroke="#2d5be3" stroke-width="1"/>
-    <text x="185" y="80" text-anchor="middle" font-family="sans-serif" font-size="11" font-weight="600" fill="#1a1814">MGC（企业官方微博）</text>
-    <text x="185" y="95" text-anchor="middle" font-family="sans-serif" font-size="9" fill="#5a5652">15,705 条 · API 接口采集</text>
+    <!-- ── 票房框 x=290 y=20 w=200 h=50 ── -->
+    <rect x="290" y="30" width="200" height="50" rx="8" fill="#f0faf4" stroke="#1a7a3c" stroke-width="1.5"/>
+    <text x="390" y="52" text-anchor="middle" font-family="sans-serif" font-size="12" font-weight="700" fill="#0d4a24">票房 + 排片率</text>
+    <text x="390" y="68" text-anchor="middle" font-family="sans-serif" font-size="9" fill="#1a7a3c">cbooo.cn · JAVA · 60部电影</text>
 
-    <rect x="96" y="114" width="178" height="38" rx="6" fill="#fff" stroke="#2d5be3" stroke-width="1"/>
-    <text x="185" y="130" text-anchor="middle" font-family="sans-serif" font-size="11" font-weight="600" fill="#1a1814">MUGC（用户微博）</text>
-    <text x="185" y="145" text-anchor="middle" font-family="sans-serif" font-size="9" fill="#5a5652">258,665 条 · 关键词爬虫</text>
+    <!-- ── PVAR框居中下方 x=315 y=240 w=150 h=50 ── -->
+    <rect x="315" y="240" width="150" height="50" rx="8" fill="#eaf0ff" stroke="#2d5be3" stroke-width="2"/>
+    <text x="390" y="261" text-anchor="middle" font-family="sans-serif" font-size="13" font-weight="700" fill="#1a3a9e">PVAR 模型</text>
+    <text x="390" y="279" text-anchor="middle" font-family="sans-serif" font-size="9" fill="#2d5be3">多平台数据联合建模</text>
 
-    <rect x="96" y="164" width="178" height="38" rx="6" fill="#f6f5f2" stroke="#9a9690" stroke-width="1"/>
-    <text x="185" y="180" text-anchor="middle" font-family="sans-serif" font-size="11" font-weight="600" fill="#1a1814">转发量 RWeiboVol</text>
-    <text x="185" y="195" text-anchor="middle" font-family="sans-serif" font-size="9" fill="#5a5652">随 MUGC 同步采集</text>
-
-    <!-- 豆瓣平台 -->
-    <rect x="460" y="32" width="210" height="150" rx="10" fill="#fff4e5" stroke="#b85c00" stroke-width="1.5" stroke-dasharray="6 3"/>
-    <text x="565" y="54" text-anchor="middle" font-family="sans-serif" font-size="13" font-weight="700" fill="#7a4000">豆瓣 Douban</text>
-
-    <rect x="476" y="64" width="178" height="38" rx="6" fill="#fff" stroke="#b85c00" stroke-width="1"/>
-    <text x="565" y="80" text-anchor="middle" font-family="sans-serif" font-size="11" font-weight="600" fill="#1a1814">DUGC（用户评论）</text>
-    <text x="565" y="95" text-anchor="middle" font-family="sans-serif" font-size="9" fill="#5a5652">358,980 条 · JAVA 爬虫</text>
-
-    <rect x="476" y="114" width="178" height="38" rx="6" fill="#f6f5f2" stroke="#9a9690" stroke-width="1"/>
-    <text x="565" y="130" text-anchor="middle" font-family="sans-serif" font-size="11" font-weight="600" fill="#1a1814">DoubanVal（评分）</text>
-    <text x="565" y="145" text-anchor="middle" font-family="sans-serif" font-size="9" fill="#5a5652">随评论同步采集</text>
-
-    <!-- cbooo 票房 -->
-    <rect x="270" y="220" width="220" height="48" rx="8" fill="#f0faf4" stroke="#1a7a3c" stroke-width="1.5"/>
-    <text x="380" y="240" text-anchor="middle" font-family="sans-serif" font-size="12" font-weight="700" fill="#0d4a24">票房 + 排片率</text>
-    <text x="380" y="257" text-anchor="middle" font-family="sans-serif" font-size="9" fill="#1a7a3c">cbooo.cn · JAVA 爬虫 · 样本60部电影</text>
-
-    <!-- 箭头：平台 → PVAR -->
-    <line x1="290" y1="145" x2="336" y2="200" stroke="#2d5be3" stroke-width="1.5" marker-end="url(#df_arr)"/>
-    <line x1="460" y1="130" x2="424" y2="216" stroke="#b85c00" stroke-width="1.5" marker-end="url(#df_arr)"/>
-
-    <!-- PVAR 框 -->
-    <rect x="336" y="202" width="88" height="32" rx="6" fill="#eaf0ff" stroke="#2d5be3" stroke-width="2"/>
-    <text x="380" y="222" text-anchor="middle" font-family="sans-serif" font-size="12" font-weight="700" fill="#1a3a9e">PVAR 模型</text>
-
-    <!-- 数量汇总 -->
-    <text x="185" y="258" text-anchor="middle" font-family="sans-serif" font-size="10" fill="#2d5be3">质量控制：过滤未认证用户（防水军）</text>
-    <text x="565" y="200" text-anchor="middle" font-family="sans-serif" font-size="10" fill="#b85c00">第三方平台 · 话题中心式</text>
+    <!-- 箭头：微博 → PVAR (从微博容器右边中部出发) -->
+    <line x1="250" y1="130" x2="315" y2="255" stroke="#2d5be3" stroke-width="1.5" marker-end="url(#df_arr)"/>
+    <!-- 箭头：豆瓣 → PVAR -->
+    <line x1="530" y1="110" x2="465" y2="250" stroke="#b85c00" stroke-width="1.5" marker-end="url(#df_arr)"/>
+    <!-- 箭头：票房 → PVAR -->
+    <line x1="390" y1="80" x2="390" y2="238" stroke="#1a7a3c" stroke-width="1.5" stroke-dasharray="5 3" marker-end="url(#df_arr)"/>
   </svg>
   </div>
 
@@ -839,78 +838,92 @@ p, li {
   <div class="sec-label r">示意图</div>
   <h2 class="r">SVM 两阶段处理流程</h2>
   <div class="r" style="margin-top:1.8rem;">
-  <svg width="100%" viewBox="0 0 800 300" style="display:block;max-height:340px;">
+  <svg width="100%" viewBox="0 0 800 280" style="display:block;max-height:320px;">
     <defs>
       <marker id="svm_arr" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
         <path d="M2 1L8 5L2 9" fill="none" stroke="context-stroke" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
       </marker>
+      <marker id="svm_arr_dash" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse">
+        <path d="M2 1L8 5L2 9" fill="none" stroke="#9a9690" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+      </marker>
     </defs>
-    <!-- 原始数据 -->
-    <rect x="10" y="115" width="110" height="60" rx="8" fill="#eaf0ff" stroke="#2d5be3" stroke-width="1.5"/>
-    <text x="65" y="140" text-anchor="middle" font-family="sans-serif" font-size="12" font-weight="700" fill="#1a3a9e">原始微博</text>
-    <text x="65" y="158" text-anchor="middle" font-family="sans-serif" font-size="10" fill="#2d5be3">258,665 条</text>
 
-    <!-- 箭头1 -->
-    <line x1="120" y1="145" x2="148" y2="145" stroke="#2d5be3" stroke-width="1.5" marker-end="url(#svm_arr)"/>
+    <!-- ── 原始微博 x=10 y=100 w=110 h=60 center=(65,130) ── -->
+    <rect x="10" y="100" width="110" height="60" rx="8" fill="#eaf0ff" stroke="#2d5be3" stroke-width="1.5"/>
+    <text x="65" y="126" text-anchor="middle" font-family="sans-serif" font-size="12" font-weight="700" fill="#1a3a9e">原始微博</text>
+    <text x="65" y="144" text-anchor="middle" font-family="sans-serif" font-size="10" fill="#2d5be3">258,665 条</text>
 
-    <!-- 第一阶段框 -->
-    <rect x="150" y="90" width="150" height="110" rx="8" fill="#f6f5f2" stroke="#9a9690" stroke-width="1.5"/>
-    <text x="225" y="112" text-anchor="middle" font-family="sans-serif" font-size="11" font-weight="700" fill="#1a1814">第一阶段</text>
-    <text x="225" y="128" text-anchor="middle" font-family="sans-serif" font-size="10" fill="#5a5652">内容分类 SVM</text>
-    <text x="225" y="145" text-anchor="middle" font-family="sans-serif" font-size="9" fill="#9a9690">训练集：20,000条</text>
-    <text x="225" y="160" text-anchor="middle" font-family="sans-serif" font-size="9" fill="#9a9690">准确率：87.59%</text>
-    <text x="225" y="175" text-anchor="middle" font-family="sans-serif" font-size="9" fill="#9a9690">卡方特征筛选</text>
+    <!-- 箭头1: 原始微博 → 第一阶段 -->
+    <line x1="120" y1="130" x2="148" y2="130" stroke="#2d5be3" stroke-width="1.5" marker-end="url(#svm_arr)"/>
 
-    <!-- 箭头2 → 3分叉 -->
-    <line x1="300" y1="145" x2="330" y2="145" stroke="#9a9690" stroke-width="1.5" marker-end="url(#svm_arr)"/>
+    <!-- ── 第一阶段 x=150 y=80 w=150 h=100 center=(225,130) ── -->
+    <rect x="150" y="80" width="150" height="100" rx="8" fill="#f6f5f2" stroke="#9a9690" stroke-width="1.5"/>
+    <text x="225" y="102" text-anchor="middle" font-family="sans-serif" font-size="11" font-weight="700" fill="#1a1814">第一阶段</text>
+    <text x="225" y="119" text-anchor="middle" font-family="sans-serif" font-size="10" fill="#5a5652">内容分类 SVM</text>
+    <text x="225" y="136" text-anchor="middle" font-family="sans-serif" font-size="9" fill="#9a9690">训练集：20,000 条</text>
+    <text x="225" y="151" text-anchor="middle" font-family="sans-serif" font-size="9" fill="#9a9690">准确率：87.59%</text>
+    <text x="225" y="166" text-anchor="middle" font-family="sans-serif" font-size="9" fill="#9a9690">卡方特征筛选</text>
 
-    <!-- 3类输出 -->
-    <rect x="332" y="38" width="120" height="42" rx="6" fill="#f0faf4" stroke="#1a7a3c" stroke-width="1"/>
-    <text x="392" y="56" text-anchor="middle" font-family="sans-serif" font-size="11" font-weight="600" fill="#0d4a24">意图类微博</text>
-    <text x="392" y="72" text-anchor="middle" font-family="sans-serif" font-size="9" fill="#1a7a3c">intention messages</text>
+    <!-- 箭头2: 第一阶段右边 → 分叉竖线 x=320 -->
+    <line x1="300" y1="130" x2="318" y2="130" stroke="#9a9690" stroke-width="1.5"/>
+    <!-- 分叉竖线 x=318, y=50~220 -->
+    <line x1="318" y1="50" x2="318" y2="220" stroke="#9a9690" stroke-width="1.5"/>
 
-    <rect x="332" y="124" width="120" height="42" rx="6" fill="#eaf0ff" stroke="#2d5be3" stroke-width="1.5"/>
-    <text x="392" y="142" text-anchor="middle" font-family="sans-serif" font-size="11" font-weight="700" fill="#1a3a9e">评价类微博 ★</text>
-    <text x="392" y="158" text-anchor="middle" font-family="sans-serif" font-size="9" fill="#2d5be3">79,305 条 → 进入第二阶段</text>
+    <!-- ── 3类输出框 x=330 ── -->
+    <!-- 意图类 y=30 h=44 center_y=52 -->
+    <rect x="330" y="30" width="130" height="44" rx="6" fill="#f0faf4" stroke="#1a7a3c" stroke-width="1"/>
+    <text x="395" y="50" text-anchor="middle" font-family="sans-serif" font-size="11" font-weight="600" fill="#0d4a24">意图类微博</text>
+    <text x="395" y="66" text-anchor="middle" font-family="sans-serif" font-size="9" fill="#1a7a3c">intention messages</text>
 
-    <rect x="332" y="210" width="120" height="42" rx="6" fill="#fff5f5" stroke="#d93025" stroke-width="1"/>
-    <text x="392" y="228" text-anchor="middle" font-family="sans-serif" font-size="11" font-weight="600" fill="#8b1a1a">垃圾/无关</text>
-    <text x="392" y="244" text-anchor="middle" font-family="sans-serif" font-size="9" fill="#d93025">spam / irrelevant</text>
+    <!-- 评价类 y=108 h=44 center_y=130 -->
+    <rect x="330" y="108" width="130" height="44" rx="6" fill="#eaf0ff" stroke="#2d5be3" stroke-width="2"/>
+    <text x="395" y="127" text-anchor="middle" font-family="sans-serif" font-size="11" font-weight="700" fill="#1a3a9e">评价类微博 ★</text>
+    <text x="395" y="143" text-anchor="middle" font-family="sans-serif" font-size="9" fill="#2d5be3">79,305 条</text>
 
-    <!-- 连线 到3个框 -->
-    <line x1="330" y1="145" x2="332" y2="59" stroke="#9a9690" stroke-width="1" stroke-dasharray="3 2"/>
-    <line x1="330" y1="145" x2="332" y2="145" stroke="#2d5be3" stroke-width="1.5"/>
-    <line x1="330" y1="145" x2="332" y2="231" stroke="#9a9690" stroke-width="1" stroke-dasharray="3 2"/>
+    <!-- 垃圾类 y=196 h=44 center_y=218 -->
+    <rect x="330" y="196" width="130" height="44" rx="6" fill="#fff5f5" stroke="#d93025" stroke-width="1"/>
+    <text x="395" y="215" text-anchor="middle" font-family="sans-serif" font-size="11" font-weight="600" fill="#8b1a1a">垃圾/无关</text>
+    <text x="395" y="231" text-anchor="middle" font-family="sans-serif" font-size="9" fill="#d93025">spam / irrelevant</text>
 
-    <!-- 箭头3 评价类 → 第二阶段 -->
-    <line x1="452" y1="145" x2="480" y2="145" stroke="#2d5be3" stroke-width="1.5" marker-end="url(#svm_arr)"/>
+    <!-- 分叉横线 → 各框左边 -->
+    <line x1="318" y1="52" x2="330" y2="52" stroke="#9a9690" stroke-width="1" stroke-dasharray="3 2" marker-end="url(#svm_arr_dash)"/>
+    <line x1="318" y1="130" x2="330" y2="130" stroke="#2d5be3" stroke-width="1.5" marker-end="url(#svm_arr)"/>
+    <line x1="318" y1="218" x2="330" y2="218" stroke="#9a9690" stroke-width="1" stroke-dasharray="3 2" marker-end="url(#svm_arr_dash)"/>
 
-    <!-- 第二阶段框 -->
-    <rect x="482" y="90" width="150" height="110" rx="8" fill="#f6f5f2" stroke="#9a9690" stroke-width="1.5"/>
-    <text x="557" y="112" text-anchor="middle" font-family="sans-serif" font-size="11" font-weight="700" fill="#1a1814">第二阶段</text>
-    <text x="557" y="128" text-anchor="middle" font-family="sans-serif" font-size="10" fill="#5a5652">情感分析 SVM</text>
-    <text x="557" y="145" text-anchor="middle" font-family="sans-serif" font-size="9" fill="#9a9690">训练集：7,194条</text>
-    <text x="557" y="160" text-anchor="middle" font-family="sans-serif" font-size="9" fill="#9a9690">F1: 94.94%</text>
-    <text x="557" y="175" text-anchor="middle" font-family="sans-serif" font-size="9" fill="#9a9690">差异化惩罚权重</text>
+    <!-- 箭头3: 评价类 → 第二阶段 -->
+    <line x1="460" y1="130" x2="488" y2="130" stroke="#2d5be3" stroke-width="1.5" marker-end="url(#svm_arr)"/>
 
-    <!-- 箭头4 → 正/负 -->
-    <line x1="632" y1="145" x2="660" y2="145" stroke="#9a9690" stroke-width="1.5" marker-end="url(#svm_arr)"/>
+    <!-- ── 第二阶段 x=490 y=80 w=150 h=100 center=(565,130) ── -->
+    <rect x="490" y="80" width="150" height="100" rx="8" fill="#f6f5f2" stroke="#9a9690" stroke-width="1.5"/>
+    <text x="565" y="102" text-anchor="middle" font-family="sans-serif" font-size="11" font-weight="700" fill="#1a1814">第二阶段</text>
+    <text x="565" y="119" text-anchor="middle" font-family="sans-serif" font-size="10" fill="#5a5652">情感分析 SVM</text>
+    <text x="565" y="136" text-anchor="middle" font-family="sans-serif" font-size="9" fill="#9a9690">训练集：7,194 条</text>
+    <text x="565" y="151" text-anchor="middle" font-family="sans-serif" font-size="9" fill="#9a9690">F1：94.94%</text>
+    <text x="565" y="166" text-anchor="middle" font-family="sans-serif" font-size="9" fill="#9a9690">差异化惩罚权重</text>
 
-    <!-- 正/负输出 -->
-    <rect x="662" y="110" width="120" height="40" rx="6" fill="#f0faf4" stroke="#1a7a3c" stroke-width="1.5"/>
-    <text x="722" y="128" text-anchor="middle" font-family="sans-serif" font-size="12" font-weight="700" fill="#0d4a24">正向情感 😊</text>
-    <text x="722" y="143" text-anchor="middle" font-family="sans-serif" font-size="9" fill="#1a7a3c">WeiboVal → 正</text>
+    <!-- 箭头4: 第二阶段右边 → 分叉竖线 x=658 -->
+    <line x1="640" y1="130" x2="658" y2="130" stroke="#9a9690" stroke-width="1.5"/>
+    <!-- 分叉竖线 x=658, y=100~180 -->
+    <line x1="658" y1="100" x2="658" y2="180" stroke="#9a9690" stroke-width="1.5"/>
 
-    <rect x="662" y="162" width="120" height="40" rx="6" fill="#fff5f5" stroke="#d93025" stroke-width="1.5"/>
-    <text x="722" y="180" text-anchor="middle" font-family="sans-serif" font-size="12" font-weight="700" fill="#8b1a1a">负向情感 😟</text>
-    <text x="722" y="195" text-anchor="middle" font-family="sans-serif" font-size="9" fill="#d93025">WeiboVal → 负（仅5.76%）</text>
+    <!-- ── 正/负输出框 x=668 ── -->
+    <!-- 正向 y=88 h=42 center_y=109 -->
+    <rect x="668" y="88" width="122" height="42" rx="6" fill="#f0faf4" stroke="#1a7a3c" stroke-width="1.5"/>
+    <text x="729" y="107" text-anchor="middle" font-family="sans-serif" font-size="12" font-weight="700" fill="#0d4a24">正向情感 😊</text>
+    <text x="729" y="122" text-anchor="middle" font-family="sans-serif" font-size="9" fill="#1a7a3c">WeiboVal → 正</text>
 
-    <line x1="660" y1="145" x2="662" y2="130" stroke="#1a7a3c" stroke-width="1"/>
-    <line x1="660" y1="145" x2="662" y2="182" stroke="#d93025" stroke-width="1"/>
+    <!-- 负向 y=148 h=42 center_y=169 -->
+    <rect x="668" y="148" width="122" height="42" rx="6" fill="#fff5f5" stroke="#d93025" stroke-width="1.5"/>
+    <text x="729" y="167" text-anchor="middle" font-family="sans-serif" font-size="12" font-weight="700" fill="#8b1a1a">负向情感 😟</text>
+    <text x="729" y="182" text-anchor="middle" font-family="sans-serif" font-size="9" fill="#d93025">WeiboVal → 负（仅5.76%）</text>
+
+    <!-- 分叉横线 → 正/负 -->
+    <line x1="658" y1="109" x2="668" y2="109" stroke="#1a7a3c" stroke-width="1.5" marker-end="url(#svm_arr)"/>
+    <line x1="658" y1="169" x2="668" y2="169" stroke="#d93025" stroke-width="1.5" marker-end="url(#svm_arr)"/>
 
     <!-- 阶段标注 -->
-    <text x="225" y="222" text-anchor="middle" font-family="sans-serif" font-size="10" fill="#9a9690">① 过滤噪声</text>
-    <text x="557" y="222" text-anchor="middle" font-family="sans-serif" font-size="10" fill="#9a9690">② 提取情感信号</text>
+    <text x="225" y="200" text-anchor="middle" font-family="sans-serif" font-size="10" fill="#9a9690">① 过滤噪声，保留评价类</text>
+    <text x="565" y="200" text-anchor="middle" font-family="sans-serif" font-size="10" fill="#9a9690">② 判断正 / 负情感</text>
   </svg>
   </div>
   <div class="r" style="margin-top:1.2rem;display:flex;gap:2rem;flex-wrap:wrap;">
