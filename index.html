@@ -490,18 +490,31 @@ p, li {
   <div class="sec-label r">研究设计脉络</div>
   <h2 class="r">整体逻辑线</h2>
   <p class="lead r" style="margin-top:0.8rem;">研究设计分两大部分：Section 3 是数据层，Section 4 是方法层。逻辑线清晰，每步环环相扣。</p>
-  <div class="flow r">
-    <div class="flow-box">样本筛选<span>60部电影</span></div>
+  <div class="flow r" style="align-items:stretch;">
+    <div class="flow-box" style="border-top-color:var(--accent);background:var(--accent-bg);">样本筛选<span>60部电影</span></div>
     <div class="flow-arr">→</div>
-    <div class="flow-box">多源采集<span>微博 + 豆瓣</span></div>
+    <div class="flow-box" style="border-top-color:var(--accent);background:var(--accent-bg);">多源采集<span>微博 + 豆瓣</span></div>
     <div class="flow-arr">→</div>
-    <div class="flow-box">文本变量化<span>两阶段SVM</span></div>
+    <div class="flow-box" style="border-top-color:var(--accent);background:var(--accent-bg);">文本变量化<span>两阶段SVM</span></div>
     <div class="flow-arr">→</div>
-    <div class="flow-box">描述统计<span>变量概览</span></div>
+    <div class="flow-box" style="border-top-color:var(--accent);background:var(--accent-bg);">描述统计<span>变量概览</span></div>
+    <div class="flow-arr" style="display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;padding:0 0.6rem;">
+      <span style="font-size:0.75rem;color:var(--warm);font-weight:700;white-space:nowrap;">Sec 4</span>
+      <span style="color:var(--ink3);font-size:1.2rem;">→</span>
+    </div>
+    <div class="flow-box" style="border-top-color:var(--warm);background:var(--warm-bg);">PVAR模型<span>方法选择</span></div>
     <div class="flow-arr">→</div>
-    <div class="flow-box">PVAR模型<span>方法选择</span></div>
-    <div class="flow-arr">→</div>
-    <div class="flow-box">公式+变量<span>操作化定义</span></div>
+    <div class="flow-box" style="border-top-color:var(--warm);background:var(--warm-bg);">公式+变量<span>操作化定义</span></div>
+  </div>
+  <div class="r" style="display:flex;gap:1.5rem;margin-top:0.8rem;flex-wrap:wrap;">
+    <div style="display:flex;align-items:center;gap:0.5rem;">
+      <div style="width:14px;height:4px;border-radius:2px;background:var(--accent);"></div>
+      <span style="font-size:0.88rem;color:var(--ink3);">Section 3 · 数据层</span>
+    </div>
+    <div style="display:flex;align-items:center;gap:0.5rem;">
+      <div style="width:14px;height:4px;border-radius:2px;background:var(--warm);"></div>
+      <span style="font-size:0.88rem;color:var(--ink3);">Section 4 · 方法层</span>
+    </div>
   </div>
   <div class="cards cards-2 r" style="margin-top:1.4rem;">
     <div class="card card-accent">
