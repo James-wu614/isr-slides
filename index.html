@@ -339,6 +339,41 @@ p, li {
 .slide-close .sec-label { color: var(--ink3); }
 .slide-close .slide-num { color: var(--ink3); }
 
+
+/* ── Counter: bad example ── */
+.bad-example {
+  background: #fff5f5;
+  border-left: 3px solid #d93025;
+  border-radius: 0 8px 8px 0;
+  padding: 0.6rem 0.9rem;
+  margin-top: 0.7rem;
+}
+.bad-label {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #d93025;
+  margin-bottom: 0.3rem;
+}
+.bad-text { font-size: 0.96rem; color: #8b1a1a; line-height: 1.6; }
+.good-label {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #1a7a3c;
+  margin-bottom: 0.3rem;
+  margin-top: 0.6rem;
+}
+.good-example {
+  background: #f0faf4;
+  border-left: 3px solid #1a7a3c;
+  border-radius: 0 8px 8px 0;
+  padding: 0.6rem 0.9rem;
+}
+.good-text { font-size: 0.96rem; color: #0d4a24; line-height: 1.6; }
+
 @media (max-width: 900px) {
   .para-grid, .cards-3, .concl-row { grid-template-columns: 1fr; }
   .cards-2 { grid-template-columns: 1fr; }
@@ -382,13 +417,13 @@ p, li {
   <p class="sub r" style="margin-top:2.5rem;">研究设计精读 · 学术写作课</p>
   <div class="r" style="margin-top:2rem;width:40px;height:1px;background:var(--border);"></div>
   <p class="r" style="margin-top:1.2rem;font-size:1.05rem;color:var(--ink2);font-weight:600;letter-spacing:0.04em;">第 02 组 &nbsp;&nbsp;|&nbsp;&nbsp; 吴哲维 &nbsp;·&nbsp; 曲年泰 &nbsp;·&nbsp; 段芊羽 &nbsp;·&nbsp; 李泽闻</p>
-  <span class="slide-num">01 / 14</span>
+  <span class="slide-num">01 / 17</span>
 </section>
 
 <!-- ══════════════════════════════════════════
      SLIDE 2 · 文章概览
 ══════════════════════════════════════════ -->
-<section class="slide vis" id="s2">
+<section class="slide" id="s2">
   <div class="r"><div class="accent-line"></div></div>
   <div class="sec-label r">文章概览</div>
   <h2 class="r">这篇文章在研究什么</h2>
@@ -412,13 +447,45 @@ p, li {
       <p style="font-size:0.98rem;">整合两平台的PVAR模型预测误差仅3.2%，远超已有模型的7%和47%</p>
     </div>
   </div>
-  <span class="slide-num">02 / 14</span>
+  <span class="slide-num">02 / 17</span>
+</section>
+
+
+<!-- ══════════════════════════════════════════
+     SLIDE 3 · 研究背景与动机
+══════════════════════════════════════════ -->
+<section class="slide slide-alt" id="s_bg">
+  <div class="r"><div class="accent-line"></div></div>
+  <div class="sec-label r">研究背景</div>
+  <h2 class="r">为什么要做这篇研究？</h2>
+  <div class="cards cards-2 r" style="margin-top:1.4rem;">
+    <div class="card card-accent">
+      <h3>现有研究的空白</h3>
+      <p>已有大量研究证明第三方平台（如豆瓣/Yahoo Movies/IMDB）的 UGC 能预测销售，但几乎都只研究<strong>单一平台</strong>，微博等社交媒体与第三方平台的<strong>对比及互动</strong>尚未被探索。</p>
+    </div>
+    <div class="card card-warm">
+      <h3>微博 vs 豆瓣的本质差异</h3>
+      <p>微博整合了<strong>社交网络广播</strong>（快速扩散、UGC+MGC并存）；豆瓣是<strong>话题中心式</strong>（用户主动搜索）。两者内容消费行为相似，但传播机制不同——谁的预测力更强？</p>
+    </div>
+  </div>
+  <div class="cards cards-2 r" style="margin-top:1rem;">
+    <div class="card">
+      <h3>MGC 的缺失</h3>
+      <p>已有研究关注 UGC vs MGC 的相对效果（Goh et al. 2013），但几乎没有研究探讨 <strong>MGC 与 UGC 之间的互动机制</strong>，以及这种互动对销售预测的价值。</p>
+    </div>
+    <div class="card">
+      <h3>核心研究问题</h3>
+      <p style="color:var(--accent);font-weight:600;">① MUGC 与 DUGC 预测票房的效果有何不同？<br>② MGC（企业微博）能否有效预测产品销售？<br>③ 结合多平台数据能否提升预测精度？</p>
+    </div>
+  </div>
+
+  <span class="slide-num">03 / 17</span>
 </section>
 
 <!-- ══════════════════════════════════════════
      SLIDE 3 · 研究设计整体脉络
 ══════════════════════════════════════════ -->
-<section class="slide vis slide-alt" id="s3">
+<section class="slide" id="s3">
   <div class="r"><div class="accent-line"></div></div>
   <div class="sec-label r">研究设计脉络</div>
   <h2 class="r">整体逻辑线</h2>
@@ -446,13 +513,13 @@ p, li {
       <p>用什么模型、为什么选这个模型、每个变量和参数怎么定义</p>
     </div>
   </div>
-  <span class="slide-num">03 / 14</span>
+  <span class="slide-num">04 / 17</span>
 </section>
 
 <!-- ══════════════════════════════════════════
      SLIDE 4 · 段落1 样本筛选 + 变量关系图
 ══════════════════════════════════════════ -->
-<section class="slide vis" id="s4b">
+<section class="slide slide-alt" id="s4b">
   <div class="r"><div class="accent-line"></div></div>
   <div class="sec-label r">主要发现</div>
   <h2 class="r">变量关系与核心结论</h2>
@@ -511,13 +578,13 @@ p, li {
       <text x="211" y="310" font-family="sans-serif" font-size="10" fill="#5a5652">部分显著</text>
     </svg>
   </div>
-  <span class="slide-num">04 / 14</span>
+  <span class="slide-num">05 / 17</span>
 </section>
 
 <!-- ══════════════════════════════════════════
      SLIDE 5 · 变量关系图
 ══════════════════════════════════════════ -->
-<section class="slide vis slide-alt" id="s4">
+<section class="slide" id="s4">
   <div class="r"><div class="accent-line"></div></div>
   <div class="r"><span class="tag tag-blue">段落 1 · Sec 3.1 首段</span></div>
   <h2 class="r">样本筛选</h2>
@@ -539,13 +606,13 @@ p, li {
       </div>
     </div>
   </div>
-  <span class="slide-num">05 / 14</span>
+  <span class="slide-num">06 / 17</span>
 </section>
 
 <!-- ══════════════════════════════════════════
      SLIDE 5 · 段落2 多源数据采集
 ══════════════════════════════════════════ -->
-<section class="slide vis" id="s5">
+<section class="slide slide-alt" id="s5">
   <div class="r"><div class="accent-line"></div></div>
   <div class="r"><span class="tag tag-blue">段落 2 · Sec 3.1 第2段</span></div>
   <h2 class="r">多源数据采集</h2>
@@ -573,13 +640,13 @@ p, li {
       </div>
     </div>
   </div>
-  <span class="slide-num">06 / 14</span>
+  <span class="slide-num">07 / 17</span>
 </section>
 
 <!-- ══════════════════════════════════════════
      SLIDE 6 · 段落3 引入两阶段框架
 ══════════════════════════════════════════ -->
-<section class="slide vis slide-alt" id="s6">
+<section class="slide" id="s6">
   <div class="r"><div class="accent-line"></div></div>
   <div class="r"><span class="tag tag-blue">段落 3 · Sec 3.1 第3段</span></div>
   <h2 class="r">引入两阶段处理框架</h2>
@@ -604,13 +671,84 @@ p, li {
       </div>
     </div>
   </div>
-  <span class="slide-num">07 / 14</span>
+  <span class="slide-num">08 / 17</span>
+</section>
+
+
+<!-- ══════════════════════════════════════════
+     数据采集流程图（插图页）
+══════════════════════════════════════════ -->
+<section class="slide slide-alt" id="s_data_flow">
+  <div class="r"><div class="accent-line"></div></div>
+  <div class="sec-label r">数据架构</div>
+  <h2 class="r">多源数据采集架构图</h2>
+  <div class="r" style="margin-top:1.6rem;">
+  <svg width="100%" viewBox="0 0 760 280" style="display:block;max-height:320px;">
+    <defs>
+      <marker id="df_arr" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+        <path d="M2 1L8 5L2 9" fill="none" stroke="context-stroke" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+      </marker>
+    </defs>
+
+    <!-- 平台层 -->
+    <text x="185" y="22" text-anchor="middle" font-family="sans-serif" font-size="11" font-weight="700" fill="#9a9690" letter-spacing="2">平台</text>
+    <text x="575" y="22" text-anchor="middle" font-family="sans-serif" font-size="11" font-weight="700" fill="#9a9690" letter-spacing="2">数据</text>
+
+    <!-- 微博平台 -->
+    <rect x="80" y="32" width="210" height="200" rx="10" fill="#eaf0ff" stroke="#2d5be3" stroke-width="1.5" stroke-dasharray="6 3"/>
+    <text x="185" y="54" text-anchor="middle" font-family="sans-serif" font-size="13" font-weight="700" fill="#1a3a9e">微博 Weibo</text>
+
+    <!-- 微博内3块 -->
+    <rect x="96" y="64" width="178" height="38" rx="6" fill="#fff" stroke="#2d5be3" stroke-width="1"/>
+    <text x="185" y="80" text-anchor="middle" font-family="sans-serif" font-size="11" font-weight="600" fill="#1a1814">MGC（企业官方微博）</text>
+    <text x="185" y="95" text-anchor="middle" font-family="sans-serif" font-size="9" fill="#5a5652">15,705 条 · API 接口采集</text>
+
+    <rect x="96" y="114" width="178" height="38" rx="6" fill="#fff" stroke="#2d5be3" stroke-width="1"/>
+    <text x="185" y="130" text-anchor="middle" font-family="sans-serif" font-size="11" font-weight="600" fill="#1a1814">MUGC（用户微博）</text>
+    <text x="185" y="145" text-anchor="middle" font-family="sans-serif" font-size="9" fill="#5a5652">258,665 条 · 关键词爬虫</text>
+
+    <rect x="96" y="164" width="178" height="38" rx="6" fill="#f6f5f2" stroke="#9a9690" stroke-width="1"/>
+    <text x="185" y="180" text-anchor="middle" font-family="sans-serif" font-size="11" font-weight="600" fill="#1a1814">转发量 RWeiboVol</text>
+    <text x="185" y="195" text-anchor="middle" font-family="sans-serif" font-size="9" fill="#5a5652">随 MUGC 同步采集</text>
+
+    <!-- 豆瓣平台 -->
+    <rect x="460" y="32" width="210" height="150" rx="10" fill="#fff4e5" stroke="#b85c00" stroke-width="1.5" stroke-dasharray="6 3"/>
+    <text x="565" y="54" text-anchor="middle" font-family="sans-serif" font-size="13" font-weight="700" fill="#7a4000">豆瓣 Douban</text>
+
+    <rect x="476" y="64" width="178" height="38" rx="6" fill="#fff" stroke="#b85c00" stroke-width="1"/>
+    <text x="565" y="80" text-anchor="middle" font-family="sans-serif" font-size="11" font-weight="600" fill="#1a1814">DUGC（用户评论）</text>
+    <text x="565" y="95" text-anchor="middle" font-family="sans-serif" font-size="9" fill="#5a5652">358,980 条 · JAVA 爬虫</text>
+
+    <rect x="476" y="114" width="178" height="38" rx="6" fill="#f6f5f2" stroke="#9a9690" stroke-width="1"/>
+    <text x="565" y="130" text-anchor="middle" font-family="sans-serif" font-size="11" font-weight="600" fill="#1a1814">DoubanVal（评分）</text>
+    <text x="565" y="145" text-anchor="middle" font-family="sans-serif" font-size="9" fill="#5a5652">随评论同步采集</text>
+
+    <!-- cbooo 票房 -->
+    <rect x="270" y="220" width="220" height="48" rx="8" fill="#f0faf4" stroke="#1a7a3c" stroke-width="1.5"/>
+    <text x="380" y="240" text-anchor="middle" font-family="sans-serif" font-size="12" font-weight="700" fill="#0d4a24">票房 + 排片率</text>
+    <text x="380" y="257" text-anchor="middle" font-family="sans-serif" font-size="9" fill="#1a7a3c">cbooo.cn · JAVA 爬虫 · 样本60部电影</text>
+
+    <!-- 箭头：平台 → PVAR -->
+    <line x1="290" y1="145" x2="336" y2="200" stroke="#2d5be3" stroke-width="1.5" marker-end="url(#df_arr)"/>
+    <line x1="460" y1="130" x2="424" y2="216" stroke="#b85c00" stroke-width="1.5" marker-end="url(#df_arr)"/>
+
+    <!-- PVAR 框 -->
+    <rect x="336" y="202" width="88" height="32" rx="6" fill="#eaf0ff" stroke="#2d5be3" stroke-width="2"/>
+    <text x="380" y="222" text-anchor="middle" font-family="sans-serif" font-size="12" font-weight="700" fill="#1a3a9e">PVAR 模型</text>
+
+    <!-- 数量汇总 -->
+    <text x="185" y="258" text-anchor="middle" font-family="sans-serif" font-size="10" fill="#2d5be3">质量控制：过滤未认证用户（防水军）</text>
+    <text x="565" y="200" text-anchor="middle" font-family="sans-serif" font-size="10" fill="#b85c00">第三方平台 · 话题中心式</text>
+  </svg>
+  </div>
+
+  <span class="slide-num">09 / 17</span>
 </section>
 
 <!-- ══════════════════════════════════════════
      SLIDE 7 · 段落4+5 SVM流程
 ══════════════════════════════════════════ -->
-<section class="slide vis" id="s7">
+<section class="slide" id="s7">
   <div class="r"><div class="accent-line"></div></div>
   <div class="r"><span class="tag tag-blue">段落 4+5 · Sec 3.1 第4–5段</span></div>
   <h2 class="r">SVM 内容分类 + 情感分析</h2>
@@ -642,13 +780,13 @@ p, li {
       </div>
     </div>
   </div>
-  <span class="slide-num">08 / 14</span>
+  <span class="slide-num">10 / 17</span>
 </section>
 
 <!-- ══════════════════════════════════════════
      SLIDE 8 · 段落6 解释SVM性能
 ══════════════════════════════════════════ -->
-<section class="slide vis slide-alt" id="s8">
+<section class="slide slide-alt" id="s8">
   <div class="r"><div class="accent-line"></div></div>
   <div class="r"><span class="tag tag-blue">段落 6 · Sec 3.1 第6段</span></div>
   <h2 class="r">解释 SVM 性能好的三个原因</h2>
@@ -676,13 +814,110 @@ p, li {
       </div>
     </div>
   </div>
-  <span class="slide-num">09 / 14</span>
+  <span class="slide-num">11 / 17</span>
+</section>
+
+
+<!-- ══════════════════════════════════════════
+     SVM流程图（独立插图页）
+══════════════════════════════════════════ -->
+<section class="slide" id="s_svm_flow">
+  <div class="r"><div class="accent-line"></div></div>
+  <div class="sec-label r">示意图</div>
+  <h2 class="r">SVM 两阶段处理流程</h2>
+  <div class="r" style="margin-top:1.8rem;">
+  <svg width="100%" viewBox="0 0 800 300" style="display:block;max-height:340px;">
+    <defs>
+      <marker id="svm_arr" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+        <path d="M2 1L8 5L2 9" fill="none" stroke="context-stroke" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+      </marker>
+    </defs>
+    <!-- 原始数据 -->
+    <rect x="10" y="115" width="110" height="60" rx="8" fill="#eaf0ff" stroke="#2d5be3" stroke-width="1.5"/>
+    <text x="65" y="140" text-anchor="middle" font-family="sans-serif" font-size="12" font-weight="700" fill="#1a3a9e">原始微博</text>
+    <text x="65" y="158" text-anchor="middle" font-family="sans-serif" font-size="10" fill="#2d5be3">258,665 条</text>
+
+    <!-- 箭头1 -->
+    <line x1="120" y1="145" x2="148" y2="145" stroke="#2d5be3" stroke-width="1.5" marker-end="url(#svm_arr)"/>
+
+    <!-- 第一阶段框 -->
+    <rect x="150" y="90" width="150" height="110" rx="8" fill="#f6f5f2" stroke="#9a9690" stroke-width="1.5"/>
+    <text x="225" y="112" text-anchor="middle" font-family="sans-serif" font-size="11" font-weight="700" fill="#1a1814">第一阶段</text>
+    <text x="225" y="128" text-anchor="middle" font-family="sans-serif" font-size="10" fill="#5a5652">内容分类 SVM</text>
+    <text x="225" y="145" text-anchor="middle" font-family="sans-serif" font-size="9" fill="#9a9690">训练集：20,000条</text>
+    <text x="225" y="160" text-anchor="middle" font-family="sans-serif" font-size="9" fill="#9a9690">准确率：87.59%</text>
+    <text x="225" y="175" text-anchor="middle" font-family="sans-serif" font-size="9" fill="#9a9690">卡方特征筛选</text>
+
+    <!-- 箭头2 → 3分叉 -->
+    <line x1="300" y1="145" x2="330" y2="145" stroke="#9a9690" stroke-width="1.5" marker-end="url(#svm_arr)"/>
+
+    <!-- 3类输出 -->
+    <rect x="332" y="38" width="120" height="42" rx="6" fill="#f0faf4" stroke="#1a7a3c" stroke-width="1"/>
+    <text x="392" y="56" text-anchor="middle" font-family="sans-serif" font-size="11" font-weight="600" fill="#0d4a24">意图类微博</text>
+    <text x="392" y="72" text-anchor="middle" font-family="sans-serif" font-size="9" fill="#1a7a3c">intention messages</text>
+
+    <rect x="332" y="124" width="120" height="42" rx="6" fill="#eaf0ff" stroke="#2d5be3" stroke-width="1.5"/>
+    <text x="392" y="142" text-anchor="middle" font-family="sans-serif" font-size="11" font-weight="700" fill="#1a3a9e">评价类微博 ★</text>
+    <text x="392" y="158" text-anchor="middle" font-family="sans-serif" font-size="9" fill="#2d5be3">79,305 条 → 进入第二阶段</text>
+
+    <rect x="332" y="210" width="120" height="42" rx="6" fill="#fff5f5" stroke="#d93025" stroke-width="1"/>
+    <text x="392" y="228" text-anchor="middle" font-family="sans-serif" font-size="11" font-weight="600" fill="#8b1a1a">垃圾/无关</text>
+    <text x="392" y="244" text-anchor="middle" font-family="sans-serif" font-size="9" fill="#d93025">spam / irrelevant</text>
+
+    <!-- 连线 到3个框 -->
+    <line x1="330" y1="145" x2="332" y2="59" stroke="#9a9690" stroke-width="1" stroke-dasharray="3 2"/>
+    <line x1="330" y1="145" x2="332" y2="145" stroke="#2d5be3" stroke-width="1.5"/>
+    <line x1="330" y1="145" x2="332" y2="231" stroke="#9a9690" stroke-width="1" stroke-dasharray="3 2"/>
+
+    <!-- 箭头3 评价类 → 第二阶段 -->
+    <line x1="452" y1="145" x2="480" y2="145" stroke="#2d5be3" stroke-width="1.5" marker-end="url(#svm_arr)"/>
+
+    <!-- 第二阶段框 -->
+    <rect x="482" y="90" width="150" height="110" rx="8" fill="#f6f5f2" stroke="#9a9690" stroke-width="1.5"/>
+    <text x="557" y="112" text-anchor="middle" font-family="sans-serif" font-size="11" font-weight="700" fill="#1a1814">第二阶段</text>
+    <text x="557" y="128" text-anchor="middle" font-family="sans-serif" font-size="10" fill="#5a5652">情感分析 SVM</text>
+    <text x="557" y="145" text-anchor="middle" font-family="sans-serif" font-size="9" fill="#9a9690">训练集：7,194条</text>
+    <text x="557" y="160" text-anchor="middle" font-family="sans-serif" font-size="9" fill="#9a9690">F1: 94.94%</text>
+    <text x="557" y="175" text-anchor="middle" font-family="sans-serif" font-size="9" fill="#9a9690">差异化惩罚权重</text>
+
+    <!-- 箭头4 → 正/负 -->
+    <line x1="632" y1="145" x2="660" y2="145" stroke="#9a9690" stroke-width="1.5" marker-end="url(#svm_arr)"/>
+
+    <!-- 正/负输出 -->
+    <rect x="662" y="110" width="120" height="40" rx="6" fill="#f0faf4" stroke="#1a7a3c" stroke-width="1.5"/>
+    <text x="722" y="128" text-anchor="middle" font-family="sans-serif" font-size="12" font-weight="700" fill="#0d4a24">正向情感 😊</text>
+    <text x="722" y="143" text-anchor="middle" font-family="sans-serif" font-size="9" fill="#1a7a3c">WeiboVal → 正</text>
+
+    <rect x="662" y="162" width="120" height="40" rx="6" fill="#fff5f5" stroke="#d93025" stroke-width="1.5"/>
+    <text x="722" y="180" text-anchor="middle" font-family="sans-serif" font-size="12" font-weight="700" fill="#8b1a1a">负向情感 😟</text>
+    <text x="722" y="195" text-anchor="middle" font-family="sans-serif" font-size="9" fill="#d93025">WeiboVal → 负（仅5.76%）</text>
+
+    <line x1="660" y1="145" x2="662" y2="130" stroke="#1a7a3c" stroke-width="1"/>
+    <line x1="660" y1="145" x2="662" y2="182" stroke="#d93025" stroke-width="1"/>
+
+    <!-- 阶段标注 -->
+    <text x="225" y="222" text-anchor="middle" font-family="sans-serif" font-size="10" fill="#9a9690">① 过滤噪声</text>
+    <text x="557" y="222" text-anchor="middle" font-family="sans-serif" font-size="10" fill="#9a9690">② 提取情感信号</text>
+  </svg>
+  </div>
+  <div class="r" style="margin-top:1.2rem;display:flex;gap:2rem;flex-wrap:wrap;">
+    <div style="display:flex;align-items:center;gap:0.5rem;">
+      <div style="width:12px;height:12px;border-radius:2px;background:#eaf0ff;border:1.5px solid #2d5be3;"></div>
+      <span style="font-size:0.92rem;color:var(--ink2);">进入下一阶段的关键流</span>
+    </div>
+    <div style="display:flex;align-items:center;gap:0.5rem;">
+      <div style="width:12px;height:12px;border-radius:2px;background:#f6f5f2;border:1.5px solid #9a9690;"></div>
+      <span style="font-size:0.92rem;color:var(--ink2);">过滤掉的无效数据</span>
+    </div>
+  </div>
+
+  <span class="slide-num">12 / 17</span>
 </section>
 
 <!-- ══════════════════════════════════════════
      SLIDE 9 · 段落7 描述性统计
 ══════════════════════════════════════════ -->
-<section class="slide vis" id="s9">
+<section class="slide slide-alt" id="s9">
   <div class="r"><div class="accent-line"></div></div>
   <div class="r"><span class="tag tag-blue">段落 7 · Section 3.2</span></div>
   <h2 class="r">描述性统计</h2>
@@ -715,13 +950,13 @@ p, li {
       </div>
     </div>
   </div>
-  <span class="slide-num">10 / 14</span>
+  <span class="slide-num">13 / 17</span>
 </section>
 
 <!-- ══════════════════════════════════════════
      SLIDE 10 · 段落8 模型选择
 ══════════════════════════════════════════ -->
-<section class="slide vis slide-alt" id="s10">
+<section class="slide" id="s10">
   <div class="r"><div class="accent-line"></div></div>
   <div class="r"><span class="tag tag-warm">段落 8 · Sec 4 第1–2段</span></div>
   <h2 class="r">模型选择与论证（PVAR）</h2>
@@ -748,13 +983,13 @@ p, li {
       </div>
     </div>
   </div>
-  <span class="slide-num">11 / 14</span>
+  <span class="slide-num">14 / 17</span>
 </section>
 
 <!-- ══════════════════════════════════════════
      SLIDE 11 · 段落9 公式与控制变量
 ══════════════════════════════════════════ -->
-<section class="slide vis" id="s11">
+<section class="slide slide-alt" id="s11">
   <div class="r"><div class="accent-line"></div></div>
   <div class="r"><span class="tag tag-warm">段落 9 · Sec 4 第3段</span></div>
   <h2 class="r">模型公式、对数化与控制变量</h2>
@@ -783,13 +1018,13 @@ p, li {
       </div>
     </div>
   </div>
-  <span class="slide-num">12 / 14</span>
+  <span class="slide-num">15 / 17</span>
 </section>
 
 <!-- ══════════════════════════════════════════
      SLIDE 12 · 关键变量定义
 ══════════════════════════════════════════ -->
-<section class="slide vis slide-alt" id="s12">
+<section class="slide" id="s12">
   <div class="r"><div class="accent-line"></div></div>
   <div class="sec-label r">补充</div>
   <h2 class="r">关键变量定义一览</h2>
@@ -845,7 +1080,7 @@ p, li {
       <div class="var-cell"></div>
     </div>
   </div>
-  <span class="slide-num">13 / 14</span>
+  <span class="slide-num">16 / 17</span>
 </section>
 
 
@@ -861,21 +1096,53 @@ p, li {
     <div class="card">
       <h3>01 · 引用框架赋予合法性</h3>
       <p>用"suggested by [citation]"引用现有框架，而非自创方法，直接降低审稿人质疑。</p>
+      <div class="bad-example">
+        <div class="bad-label">✗ 反例</div>
+        <div class="bad-text">"We designed a two-stage classification method to analyze sentiment."（自创，缺乏依据）</div>
+      </div>
+      <div class="good-example">
+        <div class="good-label">✓ 本文写法</div>
+        <div class="good-text">"We conduct a two-stage data processing <strong>suggested by Hennig-Thurau et al. (2015)</strong>…"</div>
+      </div>
     </div>
     <div class="card">
       <h3>02 · 好结果需要因果解释</h3>
       <p>报告高准确率后，主动说明"为什么好"（三点式 + 逐点引文），展示方法论深度。</p>
+      <div class="bad-example">
+        <div class="bad-label">✗ 反例</div>
+        <div class="bad-text">"The precision of our model is 94.83%, which indicates satisfactory performance."（只报数字，不解释）</div>
+      </div>
+      <div class="good-example">
+        <div class="good-label">✓ 本文写法</div>
+        <div class="good-text">"…possibly because of the following <strong>three reasons</strong>. First…Second…Third…"</div>
+      </div>
     </div>
     <div class="card">
       <h3>03 · 描述统计服务论证</h3>
       <p>每个统计数字都要服务于某个论证目的，支撑设计决策或为后续结论铺垫，而非纯粹罗列。</p>
+      <div class="bad-example">
+        <div class="bad-label">✗ 反例</div>
+        <div class="bad-text">"The mean of WeiboVol is 51.29, DoubanVol is 206.53, OfficialVol is 9.90…"（纯列数字）</div>
+      </div>
+      <div class="good-example">
+        <div class="good-label">✓ 本文写法</div>
+        <div class="good-text">"Using <strong>daily</strong> box office revenue is more appropriate than weekly because <strong>the life span of movies is typically short</strong>."</div>
+      </div>
     </div>
     <div class="card">
       <h3>04 · 模型选择要有链条</h3>
       <p>先描述数据特征（为什么OLS不够）→ 再说模型优势，用"on the one hand / on the other hand"呈现两个维度。</p>
+      <div class="bad-example">
+        <div class="bad-label">✗ 反例</div>
+        <div class="bad-text">"We use a PVAR model because it is suitable for panel data."（没说为什么"合适"）</div>
+      </div>
+      <div class="good-example">
+        <div class="good-label">✓ 本文写法</div>
+        <div class="good-text">"Each variable is <strong>endogenous</strong>… On the one hand, VAR captures dynamic interactions. On the other hand, the panel nature handles <strong>unobserved heterogeneity</strong>."</div>
+      </div>
     </div>
   </div>
-  <span class="slide-num">14 / 14</span>
+  <span class="slide-num">17 / 17</span>
 </section>
 
 <script>
