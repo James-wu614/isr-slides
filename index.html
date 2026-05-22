@@ -340,6 +340,11 @@ p, li {
 .slide-close .slide-num { color: var(--ink3); }
 
 
+/* ── Universal summary list ── */
+.u-list { list-style: none; display: flex; flex-direction: column; gap: 0.55rem; margin-top: 0; }
+.u-list li { display: flex; gap: 0.6rem; align-items: flex-start; font-size: 1rem; line-height: 1.7; color: #1a3a9e; }
+.u-num { flex-shrink: 0; width: 20px; height: 20px; border-radius: 50%; background: var(--accent); color: #fff; font-size: 11px; font-weight: 700; display: flex; align-items: center; justify-content: center; margin-top: 3px; }
+
 /* ── Counter: bad example ── */
 .bad-example {
   background: #fff5f5;
@@ -611,7 +616,11 @@ p, li {
     </div>
     <div class="para-block block-universal">
       <div class="block-label">普适性总结</div>
-      <p>样本筛选应分步呈现，每步说明标准和剔除原因。每一次"删去"背后都有数据完整性或研究设计上的理由，向读者证明样本不是随意选取的。</p>
+      <ul class="u-list">
+        <li><span class="u-num">1</span>分步呈现，每步说明筛选标准与剔除理由</li>
+        <li><span class="u-num">2</span>每次"删去"背后都需有数据完整性依据</li>
+        <li><span class="u-num">3</span>向读者证明样本不是随意选取的</li>
+      </ul>
     </div>
     <div class="para-block block-quote">
       <div class="block-label">可模仿语句</div>
@@ -645,7 +654,11 @@ p, li {
     </div>
     <div class="para-block block-universal">
       <div class="block-label">普适性总结</div>
-      <p>多源数据采集需按来源分步描述，说明每个来源对应的采集工具、关键词/接口、数据量。有质量控制措施时必须写出（如过滤水军），让读者能大致"复现"采集过程，彰显数据可信度。</p>
+      <ul class="u-list">
+        <li><span class="u-num">1</span>按来源逐一描述：采集工具、关键词/接口、数据量</li>
+        <li><span class="u-num">2</span>质量控制措施必须写出（如过滤水军）</li>
+        <li><span class="u-num">3</span>让读者能大致"复现"采集过程，彰显可信度</li>
+      </ul>
     </div>
     <div class="para-block block-quote">
       <div class="block-label">可模仿语句</div>
@@ -677,7 +690,11 @@ p, li {
     </div>
     <div class="para-block block-universal">
       <div class="block-label">普适性总结</div>
-      <p>引用已发表框架（而非自创方法）赋予方法合法性，是IS领域常见写作策略。借用权威框架直接降低审稿人对方法合理性的质疑，也节省大量自我证明篇幅。只需在动词前加 "suggested by [citation]" 即可完成引用。</p>
+      <ul class="u-list">
+        <li><span class="u-num">1</span>引用已发表框架赋予方法合法性，是IS领域常见策略</li>
+        <li><span class="u-num">2</span>直接降低审稿人对方法合理性的质疑，节省自我证明篇幅</li>
+        <li><span class="u-num">3</span>只需在动词前加 "suggested by [citation]" 即可完成引用</li>
+      </ul>
     </div>
     <div class="para-block block-quote">
       <div class="block-label">可模仿语句</div>
@@ -782,8 +799,11 @@ p, li {
     </div>
     <div class="para-block block-universal">
       <div class="block-label">普适性总结</div>
-      <p>机器学习分类流程按"数据标注 → 特征工程 → 模型训练 → 验证 → 应用"五步汇报，每步说明方法和关键参数，最终报告指标证明质量。</p>
-      <p style="margin-top:0.7rem;">情感分析必须同时报告 Precision、Recall、F1 三个指标，而非只报准确率——单一准确率在类别不平衡时会掩盖少数类的分类质量。</p>
+      <ul class="u-list">
+        <li><span class="u-num">1</span>分类流程按五步汇报：标注 → 特征工程 → 训练 → 验证 → 应用</li>
+        <li><span class="u-num">2</span>每步说明方法和关键参数，最终报指标证明质量</li>
+        <li><span class="u-num">3</span>必须同时报 Precision、Recall、F1，而非只报准确率——类别不平衡时单一准确率会掩盖少数类质量</li>
+      </ul>
     </div>
     <div class="para-block block-quote">
       <div class="block-label">可模仿语句</div>
@@ -816,8 +836,11 @@ p, li {
     </div>
     <div class="para-block block-universal">
       <div class="block-label">普适性总结</div>
-      <p>报告好结果后，主动说明"为什么结果好"，是展示方法论深度的关键步骤，也是防御审稿人质疑的有效手段。三点式结构，每点引一篇文献，论证层次分明。</p>
-      <p style="margin-top:0.7rem;">这一段提示：好的方法部分不只是"描述步骤"，还要为每个关键数字提供因果解释。</p>
+      <ul class="u-list">
+        <li><span class="u-num">1</span>报告好结果后，主动说明"为什么好"——防御审稿人质疑的有效手段</li>
+        <li><span class="u-num">2</span>三点式结构，每点引一篇文献，论证层次分明</li>
+        <li><span class="u-num">3</span>好的方法部分不只是"描述步骤"，还要为每个关键数字提供因果解释</li>
+      </ul>
     </div>
     <div class="para-block block-quote">
       <div class="block-label">可模仿语句</div>
@@ -968,7 +991,11 @@ p, li {
     </div>
     <div class="para-block block-universal">
       <div class="block-label">普适性总结</div>
-      <p>描述性统计不只是"呈现数据"，还应用具体数字支撑后续设计决策（为何选日粒度）、揭示变量间量级差异（为后续比较结论铺垫）。每个数字都应服务于某个论证目的，而非纯粹罗列。</p>
+      <ul class="u-list">
+        <li><span class="u-num">1</span>用具体数字支撑设计决策（如：为何选日粒度）</li>
+        <li><span class="u-num">2</span>揭示变量间量级差异，为后续比较结论铺垫</li>
+        <li><span class="u-num">3</span>每个数字都服务于论证目的，而非纯粹罗列</li>
+      </ul>
     </div>
     <div class="para-block block-quote">
       <div class="block-label">可模仿语句</div>
@@ -1000,8 +1027,11 @@ p, li {
     </div>
     <div class="para-block block-universal">
       <div class="block-label">普适性总结</div>
-      <p>模型选择的标准论证链条：先描述数据结构或问题特征（为什么普通OLS不够用）→ 再说模型的对应优势。</p>
-      <p style="margin-top:0.7rem;">"on the one hand... on the other hand" 句式用于同时呈现同一模型在两个维度上的优势，是IS实证论文模型部分的经典写法。</p>
+      <ul class="u-list">
+        <li><span class="u-num">1</span>先描述数据特征或问题（为什么普通OLS不够用）</li>
+        <li><span class="u-num">2</span>再说模型的对应优势，形成完整论证链条</li>
+        <li><span class="u-num">3</span>"on the one hand... on the other hand" 是IS实证论文模型部分的经典句式</li>
+      </ul>
     </div>
     <div class="para-block block-quote">
       <div class="block-label">可模仿语句</div>
@@ -1035,7 +1065,11 @@ p, li {
     </div>
     <div class="para-block block-universal">
       <div class="block-label">普适性总结</div>
-      <p>呈现正式模型公式后，必须逐一解释每个符号的操作化定义；控制变量需说明选择依据（引文或理论）；固定效应的处理方式必须明确——这是避免审稿人质疑内生性问题的核心段落。</p>
+      <ul class="u-list">
+        <li><span class="u-num">1</span>呈现公式后，必须逐一解释每个符号的操作化定义</li>
+        <li><span class="u-num">2</span>控制变量需说明选择依据（引文或理论）</li>
+        <li><span class="u-num">3</span>固定效应处理方式必须明确——这是避免内生性质疑的核心段落</li>
+      </ul>
     </div>
     <div class="para-block block-quote">
       <div class="block-label">可模仿语句</div>
