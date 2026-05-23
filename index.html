@@ -343,6 +343,7 @@ p, li {
 /* ── Universal summary list ── */
 .u-list { list-style: none; display: flex; flex-direction: column; gap: 0.55rem; margin-top: 0; }
 .u-list li { display: flex; gap: 0.6rem; align-items: flex-start; font-size: 1rem; line-height: 1.7; color: #1a3a9e; }
+.q-note { font-size: 0.82rem; color: var(--warm); font-style: italic; margin-top: 0.25rem; padding-left: 0.2rem; }
 .u-num { flex-shrink: 0; width: 20px; height: 20px; border-radius: 50%; background: var(--accent); color: #fff; font-size: 11px; font-weight: 700; display: flex; align-items: center; justify-content: center; margin-top: 3px; }
 
 /* ── Counter: bad example ── */
@@ -626,7 +627,7 @@ p, li {
       <div class="block-label">可模仿语句</div>
       <div class="q-list">
         <div class="q-item">"The data collection procedure involves several steps."</div>
-        <div class="q-item">"We delete <span class="q-bracket">[N]</span> <span class="q-bracket">[units]</span> that lack <span class="q-bracket">[data]</span> information during their <span class="q-bracket">[period]</span>."</div>
+        <div class="q-item">"We delete <span class="q-bracket">[N]</span> <span class="q-bracket">[units]</span> that lack <span class="q-bracket">[data]</span> information during their <span class="q-bracket">[period]</span>."<div class="q-note">→ 限定时间范围，说明删除有据可查而非主观筛选</div></div>
         <div class="q-item">"We subsequently obtain <span class="q-bracket">[N]</span> <span class="q-bracket">[units]</span> as the sample."</div>
       </div>
     </div>
@@ -699,7 +700,7 @@ p, li {
     <div class="para-block block-quote">
       <div class="block-label">可模仿语句</div>
       <div class="q-list">
-        <div class="q-item">"We conduct a two-stage data processing suggested by <span class="q-bracket">[citation]</span> to calculate <span class="q-bracket">[measure]</span>."</div>
+        <div class="q-item">"We conduct a two-stage data processing suggested by <span class="q-bracket">[citation]</span> to calculate <span class="q-bracket">[measure]</span>."<div class="q-note">→ "suggested by" 把方法合法性转移给权威文献，审稿人难以质疑</div></div>
         <div class="q-item">"We conduct <span class="q-bracket">[step]</span> to identify <span class="q-bracket">[target]</span> by sorting <span class="q-bracket">[N]</span> <span class="q-bracket">[items]</span> into one of the <span class="q-bracket">[N]</span> following groups: (1) ...; (2) ...; (3) ..."</div>
       </div>
     </div>
@@ -808,9 +809,9 @@ p, li {
     <div class="para-block block-quote">
       <div class="block-label">可模仿语句</div>
       <div class="q-list">
-        <div class="q-item">"<span class="q-bracket">[N]</span> coders, who were extensively trained for the task, manually coded <span class="q-bracket">[N]</span> randomly selected <span class="q-bracket">[items]</span> and divided them into <span class="q-bracket">[N]</span> different groups."</div>
+        <div class="q-item">"<span class="q-bracket">[N]</span> coders, who were extensively trained for the task, manually coded <span class="q-bracket">[N]</span> randomly selected <span class="q-bracket">[items]</span> and divided them into <span class="q-bracket">[N]</span> different groups."<div class="q-note">→ "extensively trained" 是防御性措辞，先发制人回应编码可靠性质疑</div></div>
         <div class="q-item">"We select <span class="q-bracket">[features]</span> with the highest discriminatory power by measuring their chi-squared statistics."</div>
-        <div class="q-item">"We train the <span class="q-bracket">[model]</span> with the training set data and follow the method proposed by <span class="q-bracket">[citation]</span> to calculate its precision, recall and F1-score by <span class="q-bracket">[N]</span>-fold cross validation."</div>
+        <div class="q-item">"We train the <span class="q-bracket">[model]</span> with the training set data and follow the method proposed by <span class="q-bracket">[citation]</span> to calculate its precision, recall and F1-score by <span class="q-bracket">[N]</span>-fold cross validation."<div class="q-note">→ 三指标并列 + 引文出处，一句话同时完成验证汇报与方法溯源</div></div>
         <div class="q-item">"This indicates that our model provides satisfactory performance on this <span class="q-bracket">[task]</span>."</div>
       </div>
     </div>
@@ -845,7 +846,7 @@ p, li {
     <div class="para-block block-quote">
       <div class="block-label">可模仿语句</div>
       <div class="q-list">
-        <div class="q-item">"The overall performance of our <span class="q-bracket">[method]</span> is much enhanced, possibly because of the following three reasons."</div>
+        <div class="q-item">"The overall performance of our <span class="q-bracket">[method]</span> is much enhanced, possibly because of the following three reasons."<div class="q-note">→ "possibly" 是刻意降调——不过度声明因果，留有学术谦逊的余地</div></div>
         <div class="q-item">"We notice that our training set is unbalanced; that is, only <span class="q-bracket">[X]</span>% <span class="q-bracket">[items]</span> are labeled as <span class="q-bracket">[minority]</span>."</div>
         <div class="q-item">"To address this issue, we use different penalty weights for each class, namely, <span class="q-bracket">[C1]</span> for <span class="q-bracket">[class A]</span> and <span class="q-bracket">[C2]</span> for <span class="q-bracket">[class B]</span>."</div>
         <div class="q-item">"This strategy is suggested by <span class="q-bracket">[citation]</span>, which is also implemented by <span class="q-bracket">[benchmark tool]</span>."</div>
@@ -1037,7 +1038,7 @@ p, li {
       <div class="block-label">可模仿语句</div>
       <div class="q-list">
         <div class="q-item">"Each variable is endogenous and is a linear function of its own past values and the past values of all other variables."</div>
-        <div class="q-item">"On the one hand, <span class="q-bracket">[method]</span> are especially well suited to measure <span class="q-bracket">[property A]</span>. On the other hand, the <span class="q-bracket">[data structure]</span> can <span class="q-bracket">[advantage B]</span> and <span class="q-bracket">[advantage C]</span>."</div>
+        <div class="q-item">"On the one hand, <span class="q-bracket">[method]</span> are especially well suited to measure <span class="q-bracket">[property A]</span>. On the other hand, the <span class="q-bracket">[data structure]</span> can <span class="q-bracket">[advantage B]</span> and <span class="q-bracket">[advantage C]</span>."<div class="q-note">→ 两个维度的优势用对称句式呈现，比分开列点更紧凑有力</div></div>
         <div class="q-item">"We employ and estimate a <span class="q-bracket">[model]</span> with <span class="q-bracket">[feature A]</span> and <span class="q-bracket">[feature B]</span> to <span class="q-bracket">[purpose]</span>."</div>
       </div>
     </div>
@@ -1074,9 +1075,9 @@ p, li {
     <div class="para-block block-quote">
       <div class="block-label">可模仿语句</div>
       <div class="q-list">
-        <div class="q-item">"We make the log transformation of <span class="q-bracket">[variables]</span>. For example, <span class="q-bracket">[L-variable]</span> is the log transformation of the <span class="q-bracket">[description]</span> for <span class="q-bracket">[unit]</span> i on <span class="q-bracket">[time]</span> t."</div>
+        <div class="q-item">"We make the log transformation of <span class="q-bracket">[variables]</span>. For example, <span class="q-bracket">[L-variable]</span> is the log transformation of the <span class="q-bracket">[description]</span> for <span class="q-bracket">[unit]</span> i on <span class="q-bracket">[time]</span> t."<div class="q-note">→ 总说后立即用"For example"举一个实例，是定义符号的最清晰写法</div></div>
         <div class="q-item">"The p value indicates the number of lags, which may be determined using <span class="q-bracket">[AIC]</span> and <span class="q-bracket">[BIC]</span>."</div>
-        <div class="q-item">"We consider <span class="q-bracket">[N]</span> exogenous variables as follows. <span class="q-bracket">[Variable]</span> indicates if <span class="q-bracket">[condition]</span> (1 for <span class="q-bracket">[A]</span>, and 0 otherwise) to control for the possible <span class="q-bracket">[effect]</span>."</div>
+        <div class="q-item">"We consider <span class="q-bracket">[N]</span> exogenous variables as follows. <span class="q-bracket">[Variable]</span> indicates if <span class="q-bracket">[condition]</span> (1 for <span class="q-bracket">[A]</span>, and 0 otherwise) to control for the possible <span class="q-bracket">[effect]</span>."<div class="q-note">→ 虚拟变量的标准三段式：命名 + 编码规则 + 控制目的，缺一不可</div></div>
         <div class="q-item">"The <span class="q-bracket">[μ_i]</span> value is a vector of unobserved <span class="q-bracket">[unit]</span>-specific effects characterizing the time-invariant attributes of <span class="q-bracket">[units]</span>."</div>
       </div>
     </div>
